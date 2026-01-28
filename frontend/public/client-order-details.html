@@ -1,1 +1,467 @@
-<!-- This file will be read from /tmp/client-order-details.html -->
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurocircuit | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e1e4e8;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+      }
+
+      /* Form Elements */
+      .option-btn {
+        transition: all 0.2s;
+        border: 1px solid #E1E4E8;
+      }
+      .option-btn:hover {
+        border-color: #cbd5e1;
+        background-color: #f8f9fa;
+      }
+      .option-btn.selected {
+        border-color: #30A612;
+        background-color: #f0fdf4;
+        color: #14532d;
+      }
+
+      .color-swatch {
+        width: 24px;
+        height: 24px;
+        border-radius: 9999px;
+        cursor: pointer;
+        position: relative;
+        border: 1px solid #E1E4E8;
+      }
+      .color-swatch.selected::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border: 1px solid #30A612;
+        border-radius: 9999px;
+      }
+
+      /* Toggle Switch */
+      .toggle-checkbox:checked {
+        right: 0;
+        border-color: #30A612;
+      }
+      .toggle-checkbox:checked + .toggle-label {
+        background-color: #30A612;
+      }
+
+      /* Gradients */
+      .btn-primary {
+        background: linear-gradient(90deg, #30a612 0%, #62c749 100%);
+      }
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  <link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">
+.font-geist { font-family: 'Geist', sans-serif !important; }
+</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">
+.font-roboto { font-family: 'Roboto', sans-serif !important; }
+</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">
+.font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">
+.font-poppins { font-family: 'Poppins', sans-serif !important; }
+</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">
+.font-playfair { font-family: 'Playfair Display', serif !important; }
+</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">
+.font-merriweather { font-family: 'Merriweather', serif !important; }
+</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">
+.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }
+</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">
+.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">
+.font-manrope { font-family: 'Manrope', sans-serif !important; }
+</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">
+.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }
+</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">
+.font-work-sans { font-family: 'Work Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">
+.font-pt-serif { font-family: 'PT Serif', serif !important; }
+</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">
+.font-geist-mono { font-family: 'Geist Mono', monospace !important; }
+</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">
+.font-space-mono { font-family: 'Space Mono', monospace !important; }
+</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">
+.font-quicksand { font-family: 'Quicksand', sans-serif !important; }
+</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">
+.font-nunito { font-family: 'Nunito', sans-serif !important; }
+</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">
+.font-newsreader { font-family: 'Newsreader', serif !important; }
+</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">
+.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }
+</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">
+.font-oswald { font-family: 'Oswald', sans-serif !important; }
+</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">
+.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">
+.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }
+</style></head>
+  <body class="bg-[#F8F9FA] text-slate-800 h-screen flex overflow-hidden font-inter">
+    <!-- Client Sidebar -->
+    <aside class="w-64 bg-white border-r border-[#E1E4E8] flex flex-col h-full flex-shrink-0 z-20">
+      <!-- Logo Area -->
+      <div class="flex h-14 border-[#E1E4E8] border-b pr-4 pl-4 items-center">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 bg-slate-900 rounded-[4px] flex items-center justify-center text-white">
+            <span class="font-bold text-xs">N</span>
+          </div>
+          <span class="font-semibold text-sm tracking-tight text-slate-900">
+            Neurocircuit
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto pt-4 pr-2 pb-2 pl-2 space-y-1">
+        <button class="flex gap-3 text-xs font-medium text-[#15803d] bg-[#f0fdf4] w-full border-[#DCFCE7] border rounded-[4px] pt-2 pr-3 pb-2 pl-3 gap-x-3 gap-y-3 items-center">
+          <iconify-icon icon="solar:widget-linear" width="16"></iconify-icon>
+          Dashboard
+        </button>
+
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <iconify-icon icon="solar:add-circle-linear" width="16"></iconify-icon>
+          New Order
+        </button>
+
+        
+
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <iconify-icon icon="solar:card-linear" width="16" class=""></iconify-icon>
+          Billing
+        </button>
+      </nav>
+
+      <!-- User Profile Stub -->
+      <div class="p-3 border-t border-[#E1E4E8]">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-slate-100 border border-[#E1E4E8] flex items-center justify-center">
+            <span class="text-xs font-bold text-slate-600">AC</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-slate-900">Alex Chenn</span>
+            <span class="text-[10px] text-slate-500">Vector Dynamics</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+      <!-- Header -->
+      <header class="bg-white border-b border-[#E1E4E8] h-16 flex-shrink-0 px-6 flex items-center justify-between z-10">
+        <div class="">
+          <div class="flex gap-x-1 gap-y-4 items-center">
+  <button class="flex transition-colors hover:bg-slate-100 hover:text-slate-700 text-slate-400 w-8 h-8 rounded-md items-center justify-center">
+    <iconify-icon icon="lucide:arrow-left" width="18"></iconify-icon>
+  </button>
+  <div class="flex items-center gap-3">
+    <h1 class="text-lg font-semibold text-slate-900 tracking-tight font-mono">
+  #NC-8492
+</h1>
+    <span class="inline-flex items-center rounded-full border border-yellow-200 bg-yellow-50 px-2.5 py-0.5 text-[11px] font-medium text-yellow-700">
+      Action Required
+    </span>
+  </div>
+</div>
+          <div class="flex items-center gap-2 mt-0.5">
+            <iconify-icon icon="solar:zip-file-linear" class="text-slate-400 text-sm"></iconify-icon>
+            <span class="text-xs text-slate-500 font-mono">
+              sensor_array_v2.zip
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-medium text-slate-600 border border-[#E1E4E8] rounded hover:bg-slate-50 transition-colors bg-white flex items-center gap-2">
+            <iconify-icon icon="solar:eye-linear"></iconify-icon>
+            View Gerber
+          </button>
+          <button class="px-3 py-1.5 text-xs font-medium text-slate-600 border border-[#E1E4E8] rounded hover:bg-slate-50 transition-colors bg-white flex items-center gap-2">
+            <iconify-icon icon="solar:file-download-linear"></iconify-icon>
+            Download Invoice
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Content -->
+      <div class="flex-1 overflow-y-auto p-6 bg-[#F8F9FA]">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left Column: Timeline (60% ~ col-span-7) -->
+          <div class="lg:col-span-7 space-y-6">
+            <section class="bg-white border border-[#E1E4E8] rounded-lg p-6 shadow-sm">
+              <h2 class="text-sm font-semibold text-slate-900 mb-8 flex items-center gap-2">
+                <iconify-icon icon="solar:clock-circle-linear" class="text-slate-400"></iconify-icon>
+                Production Timeline
+              </h2>
+
+              <div class="relative pl-2 pb-2">
+                <!-- Vertical Line -->
+                <div class="absolute left-[19px] top-2 bottom-6 w-px bg-[#E1E4E8]"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex gap-5 mb-8">
+                  <div class="w-10 h-10 rounded-full bg-[#30A612] flex flex-shrink-0 items-center justify-center z-10 border-[3px] border-white shadow-sm">
+                    <iconify-icon icon="solar:check-read-linear" class="text-white text-lg"></iconify-icon>
+                  </div>
+                  <div class="pt-1.5">
+                    <h3 class="text-sm font-semibold text-slate-900">
+                      File Received
+                    </h3>
+                    <span class="text-xs text-slate-500 block mt-1">
+                      Oct 24, 2023 at 10:42 AM
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex gap-5 mb-8">
+                  <div class="w-10 h-10 rounded-full bg-[#30A612] flex flex-shrink-0 items-center justify-center z-10 border-[3px] border-white shadow-sm">
+                    <iconify-icon icon="solar:shield-check-linear" class="text-white text-lg"></iconify-icon>
+                  </div>
+                  <div class="pt-1.5">
+                    <h3 class="text-sm font-semibold text-slate-900">
+                      Technical Review
+                    </h3>
+                    <span class="text-xs text-slate-500 block mt-1">
+                      Passed DFM Checks. No issues found.
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Step 3 (Active) -->
+                <div class="relative flex gap-5 mb-8">
+                  <div class="w-10 h-10 rounded-full bg-white flex flex-shrink-0 items-center justify-center z-10 border-[3px] border-yellow-400 shadow-sm">
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                  </div>
+                  <div class="pt-1.5">
+                    <h3 class="text-sm font-semibold text-slate-900">
+                      Price Quoted
+                    </h3>
+                    <span class="text-xs text-yellow-600 font-medium block mt-1 bg-yellow-50 px-2 py-0.5 rounded border border-yellow-100 w-fit">
+                      Action Required: Approve quote
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative flex gap-5 mb-8 opacity-40">
+                  <div class="w-10 h-10 rounded-full bg-white flex flex-shrink-0 items-center justify-center z-10 border border-[#E1E4E8]">
+                    <span class="text-xs font-mono font-medium text-slate-400">
+                      04
+                    </span>
+                  </div>
+                  <div class="pt-1.5">
+                    <h3 class="text-sm font-semibold text-slate-900">
+                      Pooling
+                    </h3>
+                    <span class="text-xs text-slate-500 block mt-1">
+                      Batching with other prototypes.
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="relative flex gap-5 opacity-40">
+                  <div class="w-10 h-10 rounded-full bg-white flex flex-shrink-0 items-center justify-center z-10 border border-[#E1E4E8]">
+                    <span class="text-xs font-mono font-medium text-slate-400">
+                      05
+                    </span>
+                  </div>
+                  <div class="pt-1.5">
+                    <h3 class="text-sm font-semibold text-slate-900">
+                      Production
+                    </h3>
+                    <span class="text-xs text-slate-500 block mt-1">
+                      Est. completion: Oct 30
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="bg-white border border-[#E1E4E8] rounded-lg p-6 shadow-sm">
+              <h4 class="text-xs font-semibold text-slate-900 mb-4 flex items-center justify-between">
+                <span>Order Specifications</span>
+                <button class="text-[10px] text-[#30A612] hover:underline font-medium">
+                  Download Spec Sheet
+                </button>
+              </h4>
+              <div class="space-y-3">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Dimensions</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    85.5 x 54.0 mm
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Layers</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    4 Layers
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Base Material</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    FR4 TG135
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">PCB Thickness</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    1.6 mm
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Surface Finish</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    ENIG (Gold)
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Copper Weight</span>
+                  <span class="font-mono font-medium text-slate-700">1 oz</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Solder Mask</span>
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-[#15803d]"></div>
+                    <span class="font-mono font-medium text-slate-700">
+                      Green
+                    </span>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Silkscreen</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    White
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-500">Quantity</span>
+                  <span class="font-mono font-medium text-slate-700">
+                    50 pcs
+                  </span>
+                </div>
+                <div class="flex justify-between items-center text-xs pt-2 border-t border-dashed border-[#E1E4E8]">
+                  <span class="text-slate-500">Assembly</span>
+                  <span class="font-mono font-medium text-slate-400">
+                    Not Selected
+                  </span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Right Column: Quote (40% ~ col-span-5) -->
+          <div class="lg:col-span-5 space-y-6">
+            <!-- Price Card -->
+            <div class="bg-white border border-[#E1E4E8] rounded-lg p-6 shadow-[0_2px_4px_rgba(0,0,0,0.02)]">
+              <div class="flex justify-between items-start mb-6">
+                <div class="">
+                  <span class="text-xs font-medium text-slate-500 uppercase tracking-tight">
+                    Total Quote
+                  </span>
+                  <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">
+                    $45.00
+                  </div>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-green-50 text-[#30A612] flex items-center justify-center">
+                  <iconify-icon icon="solar:tag-price-bold" class="text-xl"></iconify-icon>
+                </div>
+              </div>
+
+              <button class="w-full btn-primary text-white text-sm font-semibold py-3.5 rounded shadow-sm hover:shadow-md hover:brightness-105 transition-all flex items-center justify-center gap-2">
+                Proceed to Payment
+                <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+              </button>
+            </div>
+
+            <!-- Support Card -->
+            <div class="bg-slate-900 rounded-lg p-5 shadow-sm text-white relative overflow-hidden">
+              <div class="relative z-10">
+                <h4 class="text-sm font-semibold mb-1">
+                  Need Engineering Help?
+                </h4>
+                <p class="text-xs text-slate-300 mb-3">
+                  Our CAM engineers are available to review your specific
+                  requirements.
+                </p>
+                <button class="text-xs font-medium bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded transition-colors">
+                  Contact Support
+                </button>
+              </div>
+              <iconify-icon icon="solar:chat-round-line-linear" class="absolute -bottom-2 -right-2 text-slate-800 text-6xl opacity-50 rotate-12"></iconify-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  
+</body></html>
