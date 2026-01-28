@@ -461,6 +461,7 @@ async def startup_event():
     await db.users.create_index("email", unique=True)
     await db.orders.create_index("order_id", unique=True)
     await db.orders.create_index("user_id")
+    await db.batches.create_index("batch_id", unique=True)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
