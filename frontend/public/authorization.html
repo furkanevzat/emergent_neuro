@@ -172,11 +172,13 @@
           const data = await response.json();
 
           if (response.ok) {
-            // Store token in localStorage
+            // Store token in cookie for server-side auth
+            document.cookie = `access_token=${data.access_token}; path=/; max-age=${7*24*60*60}`;
+            // Also store in localStorage for client-side use
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            // Redirect to dashboard
-            window.location.href = '/client-dashboard.html';
+            // Redirect to dashboard (server-side rendered)
+            window.location.href = '/dashboard';
           } else {
             errorDiv.textContent = data.detail || 'Login failed';
             errorDiv.classList.remove('hidden');
@@ -207,11 +209,13 @@
           const data = await response.json();
 
           if (response.ok) {
-            // Store token in localStorage
+            // Store token in cookie for server-side auth
+            document.cookie = `access_token=${data.access_token}; path=/; max-age=${7*24*60*60}`;
+            // Also store in localStorage for client-side use
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            // Redirect to dashboard
-            window.location.href = '/client-dashboard.html';
+            // Redirect to dashboard (server-side rendered)
+            window.location.href = '/dashboard';
           } else {
             errorDiv.textContent = data.detail || 'Signup failed';
             errorDiv.classList.remove('hidden');
