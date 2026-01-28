@@ -176,7 +176,7 @@
           }
           
           tbody.innerHTML = orders.map(order => `
-            <tr class="hover:bg-[#F8F9FA] transition-colors" data-testid="order-row-${order.order_id}">
+            <tr class="hover:bg-[#F8F9FA] transition-colors cursor-pointer" data-testid="order-row-${order.order_id}" onclick="window.location.href='/order-details.html?id=${order.order_id}'">
               <td class="px-8 py-4 whitespace-nowrap">
                 <span class="text-xs font-mono font-medium text-slate-900">#${order.order_id}</span>
               </td>
@@ -193,7 +193,7 @@
               </td>
               <td class="px-8 py-4 whitespace-nowrap text-right">
                 <span class="text-xs font-mono font-semibold text-slate-900">
-                  ${order.price > 0 ? `$${order.price.toFixed(2)}` : 'Pending'}
+                  ${order.price > 0 ? `$${order.price.toFixed(2)}` : order.estimated_price ? `<span class="text-amber-600">Est: $${order.estimated_price.toFixed(2)}</span>` : 'Pending'}
                 </span>
               </td>
             </tr>
