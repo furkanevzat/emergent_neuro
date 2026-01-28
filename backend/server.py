@@ -211,9 +211,10 @@ async def create_order(
     # Generate order ID
     order_id = f"NC-{str(uuid.uuid4())[:8].upper()}"
     
-    # Handle file upload and analysis
+    # Handle file upload and advanced Gerbonara analysis
     file_path = None
     gerber_analysis = {}
+    estimated_price = 0.00
     
     if gerber_file:
         # Save file
@@ -224,32 +225,82 @@ async def create_order(
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(gerber_file.file, buffer)
         
-        # Analyze Gerber file with Gerbonara
+        # Advanced Gerber Analysis with Gerbonara
         try:
             from gerbonara import LayerStack
+            import warnings
+            warnings.filterwarnings('ignore')
+            
+            logger.info(f"Starting Gerbonara analysis for order {order_id}")
             stack = LayerStack.from_zip_file(str(file_path))
             
-            # Extract layer count
-            layer_count = len([layer for layer in stack.layers if layer is not None])
+            # Extract detailed layer information
+            copper_layers = [layer for layer in stack.layers if layer is not None]
+            layer_count = len(copper_layers)
             
-            # Get board bounds
+            # Get precise board bounds
             bounds = stack.board_bounds()
             if bounds:
-                width_mm = bounds[2] - bounds[0]  # max_x - min_x
-                height_mm = bounds[3] - bounds[1]  # max_y - min_y
+                # bounds returns (min_x, min_y, max_x, max_y) in mm
+                board_width_mm = round(bounds[2] - bounds[0], 2)
+                board_height_mm = round(bounds[3] - bounds[1], 2)
+                board_area_mm2 = round(board_width_mm * board_height_mm, 2)
+                
+                # Calculate estimated price based on area, layers, and quantity
+                # Formula: (area_in_cm² * layer_count * base_rate) + (quantity_discount_factor)
+                area_cm2 = board_area_mm2 / 100
+                base_rate = 0.5  # $0.50 per cm² per layer
+                quantity = order_specs.quantity
+                
+                # Price calculation
+                base_price = area_cm2 * layer_count * base_rate
+                quantity_multiplier = 1.0 + (quantity / 100)  # Slight increase for higher quantity
+                estimated_price = round(base_price * quantity_multiplier, 2)
+                
+                # Minimum price threshold
+                estimated_price = max(estimated_price, 25.00)
+                
                 gerber_analysis = {
+                    "analysis": "success",
                     "layer_count": layer_count,
-                    "board_width_mm": round(width_mm, 2),
-                    "board_height_mm": round(height_mm, 2),
-                    "analysis": "success"
+                    "board_width_mm": board_width_mm,
+                    "board_height_mm": board_height_mm,
+                    "board_area_mm2": board_area_mm2,
+                    "board_area_cm2": round(area_cm2, 2),
+                    "estimated_price": estimated_price,
+                    "analysis_timestamp": datetime.now(timezone.utc).isoformat()
                 }
+                
+                logger.info(f"Gerbonara analysis successful for {order_id}: {layer_count} layers, {board_width_mm}x{board_height_mm}mm, estimated ${estimated_price}")
             else:
-                gerber_analysis = {"analysis": "partial", "layer_count": layer_count}
+                # Partial analysis - layers detected but no bounds
+                gerber_analysis = {
+                    "analysis": "partial",
+                    "layer_count": layer_count,
+                    "estimated_price": layer_count * 30.00,  # Fallback pricing
+                    "note": "Board bounds not detected"
+                }
+                estimated_price = gerber_analysis["estimated_price"]
+                logger.warning(f"Partial analysis for {order_id}: bounds not detected")
+                
         except Exception as e:
-            logger.warning(f"Gerber analysis failed for {order_id}: {str(e)}")
-            gerber_analysis = {"analysis": "failed", "error": str(e)[:100]}
+            logger.error(f"Gerbonara analysis failed for {order_id}: {str(e)}")
+            gerber_analysis = {
+                "analysis": "failed",
+                "error": str(e)[:200],
+                "estimated_price": order_specs.layers * order_specs.quantity * 2.5  # Basic fallback
+            }
+            estimated_price = gerber_analysis["estimated_price"]
         
         file_path = filename
+    else:
+        # No file uploaded - use user-provided specs for basic estimation
+        estimated_price = order_specs.layers * order_specs.quantity * 2.0
+        gerber_analysis = {
+            "analysis": "no_file",
+            "estimated_price": estimated_price,
+            "note": "Price estimated from specifications only"
+        }
     
     # Merge gerber analysis into specs
     specs_dict = order_specs.model_dump()
@@ -264,17 +315,21 @@ async def create_order(
         "status": OrderStatus.REVIEWING.value,
         "gerber_file": file_path,
         "specs": specs_dict,
-        "price": 0.00,
+        "price": 0.00,  # Admin will set final price
+        "estimated_price": estimated_price,
         "submitted_at": now.isoformat(),
         "updated_at": now.isoformat()
     }
     
     await db.orders.insert_one(order_doc)
     
+    logger.info(f"Order {order_id} created successfully with estimated price ${estimated_price}")
+    
     return {
         "order_id": order_id,
         "status": OrderStatus.REVIEWING.value,
         "message": "Order submitted successfully",
+        "estimated_price": estimated_price,
         "gerber_analysis": gerber_analysis if gerber_analysis else None
     }
 
