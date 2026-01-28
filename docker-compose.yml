@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:6.0
+    container_name: neurocircuit-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: neurocircuit_db
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - neurocircuit-network
+
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: neurocircuit-api
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://db:27017
+      - DB_NAME=neurocircuit_db
+      - JWT_SECRET_KEY=your-secret-key-change-in-production-09123456789
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:8001
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+    networks:
+      - neurocircuit-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  neurocircuit-network:
+    driver: bridge
