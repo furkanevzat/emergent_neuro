@@ -273,13 +273,15 @@
               </td>
               <td class="px-6 py-4">
                 ${order.specs.analysis === 'success' ? `
-                  <div class="text-xs text-green-600">
+                  <div class="text-xs text-green-600 font-medium">
                     ✓ ${order.specs.board_width_mm}×${order.specs.board_height_mm}mm<br/>
-                    ${order.specs.layer_count} layers
+                    <span class="text-slate-500">${order.specs.layer_count} layers • ${order.specs.board_area_cm2}cm²</span>
                   </div>
+                ` : order.specs.analysis === 'partial' ? `
+                  <div class="text-xs text-amber-600">⚠ Partial (${order.specs.layer_count}L)</div>
                 ` : order.specs.analysis === 'failed' ? `
-                  <div class="text-xs text-amber-600">⚠ Analysis failed</div>
-                ` : '<div class="text-xs text-slate-400">—</div>'}
+                  <div class="text-xs text-red-600">✗ Analysis failed</div>
+                ` : '<div class="text-xs text-slate-400">No file</div>'}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="text-xs text-slate-600">${formatDate(order.submitted_at)}</span>
@@ -288,17 +290,23 @@
                 ${getStatusBadge(order.status)}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span class="text-sm font-mono font-semibold text-slate-900">
-                  ${order.price > 0 ? `$${order.price.toFixed(2)}` : '—'}
-                </span>
+                <div class="flex flex-col gap-1">
+                  ${order.price > 0 ? `
+                    <span class="text-sm font-mono font-semibold text-slate-900">$${order.price.toFixed(2)}</span>
+                  ` : order.estimated_price ? `
+                    <span class="text-xs text-amber-600">Est: $${order.estimated_price.toFixed(2)}</span>
+                  ` : '—'}
+                </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <button onclick="openModal('${order.order_id}', '${order.status}', ${order.price})" 
-                        class="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                        data-testid="update-btn-${order.order_id}">
-                  Update
-                </button>
-                ${order.gerber_file ? `<a href="${API_BASE}/uploads/${order.gerber_file}" download class="ml-3 text-sm text-green-600 hover:text-green-800 font-medium">Download</a>` : ''}
+                <div class="flex flex-col gap-2">
+                  <button onclick="openModal('${order.order_id}', '${order.status}', ${order.price || order.estimated_price || 0})" 
+                          class="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                          data-testid="update-btn-${order.order_id}">
+                    Update
+                  </button>
+                  ${order.gerber_file ? `<a href="${API_BASE}/uploads/${order.gerber_file}" download class="text-sm text-green-600 hover:text-green-800 font-medium">Download</a>` : ''}
+                </div>
               </td>
             </tr>
           `).join('');
