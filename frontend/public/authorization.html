@@ -131,6 +131,11 @@
     </main>
 
     <script>
+      // Get API URL from window location or use external URL
+      const API_BASE = window.location.hostname === 'localhost' 
+        ? 'http://localhost:8001'
+        : 'https://pcb-pool.preview.emergentagent.com';
+      
       function toggleAuth(view) {
         const loginView = document.getElementById('login-view');
         const signupView = document.getElementById('signup-view');
@@ -158,7 +163,7 @@
         const password = document.getElementById('login-password').value;
 
         try {
-          const response = await fetch('/api/auth/login', {
+          const response = await fetch(`${API_BASE}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -167,10 +172,11 @@
           const data = await response.json();
 
           if (response.ok) {
-            // Store token in cookie
-            document.cookie = `access_token=${data.access_token}; path=/; max-age=${7*24*60*60}`;
+            // Store token in localStorage
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('user', JSON.stringify(data.user));
             // Redirect to dashboard
-            window.location.href = '/dashboard';
+            window.location.href = '/client-dashboard.html';
           } else {
             errorDiv.textContent = data.detail || 'Login failed';
             errorDiv.classList.remove('hidden');
@@ -192,7 +198,7 @@
         const password = document.getElementById('signup-password').value;
 
         try {
-          const response = await fetch('/api/auth/signup', {
+          const response = await fetch(`${API_BASE}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, password })
@@ -201,10 +207,11 @@
           const data = await response.json();
 
           if (response.ok) {
-            // Store token in cookie
-            document.cookie = `access_token=${data.access_token}; path=/; max-age=${7*24*60*60}`;
+            // Store token in localStorage
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('user', JSON.stringify(data.user));
             // Redirect to dashboard
-            window.location.href = '/dashboard';
+            window.location.href = '/client-dashboard.html';
           } else {
             errorDiv.textContent = data.detail || 'Signup failed';
             errorDiv.classList.remove('hidden');
