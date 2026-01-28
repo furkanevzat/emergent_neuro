@@ -1,0 +1,810 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurocircuit | Admin Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e1e4e8;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+      }
+
+      /* Status Badges */
+      .badge-reviewing {
+        background-color: #fff4e5;
+        color: #b76e00;
+        border: 1px solid #fed7aa;
+      }
+      .badge-quoted {
+        background-color: #e6fffa;
+        color: #006d5d;
+        border: 1px solid #ccfbf1;
+      }
+      .badge-production {
+        background-color: #ebf4ff;
+        color: #004085;
+        border: 1px solid #dbeafe;
+      }
+      .badge-hold {
+        background-color: #fff1f2;
+        color: #be123c;
+        border: 1px solid #fecdd3;
+      }
+
+      /* Gradients */
+      .btn-success {
+        background: linear-gradient(90deg, #30a612 0%, #62c749 100%);
+      }
+      .btn-neutral {
+        background: linear-gradient(90deg, #8c7ad8 0%, #8a88ff 100%);
+      }
+
+      /* View transition utility */
+      .view-section {
+        display: none;
+        animation: fadeIn 0.2s ease-out;
+      }
+      .view-section.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <style>
+      .badge-shipping{background-color:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}.badge-delivered{background-color:#f0fdf4;color:#15803d;border:1px solid #dcfce7}
+    </style>
+  <link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">
+.font-geist { font-family: 'Geist', sans-serif !important; }
+</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">
+.font-roboto { font-family: 'Roboto', sans-serif !important; }
+</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">
+.font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">
+.font-poppins { font-family: 'Poppins', sans-serif !important; }
+</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">
+.font-playfair { font-family: 'Playfair Display', serif !important; }
+</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">
+.font-merriweather { font-family: 'Merriweather', serif !important; }
+</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">
+.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }
+</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">
+.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">
+.font-manrope { font-family: 'Manrope', sans-serif !important; }
+</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">
+.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }
+</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">
+.font-work-sans { font-family: 'Work Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">
+.font-pt-serif { font-family: 'PT Serif', serif !important; }
+</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">
+.font-geist-mono { font-family: 'Geist Mono', monospace !important; }
+</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">
+.font-space-mono { font-family: 'Space Mono', monospace !important; }
+</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">
+.font-quicksand { font-family: 'Quicksand', sans-serif !important; }
+</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">
+.font-nunito { font-family: 'Nunito', sans-serif !important; }
+</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">
+.font-newsreader { font-family: 'Newsreader', serif !important; }
+</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">
+.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }
+</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">
+.font-oswald { font-family: 'Oswald', sans-serif !important; }
+</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">
+.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">
+.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }
+</style></head>
+  <body class="bg-white text-slate-800 h-screen flex overflow-hidden font-inter">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#F8F9FA] border-r border-[#E1E4E8] flex flex-col h-full flex-shrink-0 z-20">
+      <!-- Logo Area -->
+      <div class="h-14 flex items-center px-4 border-b border-[#E1E4E8] bg-[#F8F9FA]">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 bg-slate-900 rounded-[4px] flex items-center justify-center text-white">
+            <span class="font-bold text-xs">N</span>
+          </div>
+          <span class="font-semibold text-sm tracking-tight text-slate-900">
+            Neurocircuit
+            <span class="text-slate-400 font-normal">Internal</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto pt-2 pr-2 pb-2 pl-2 space-y-0.5">
+        <div class="px-2 pb-2 pt-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+          Queue Management
+        </div>
+
+        <button onclick="switchView('queue')" class="w-full flex items-center gap-3 px-3 py-1.5 text-sm font-medium rounded-[4px] bg-white border border-[#E1E4E8] text-slate-900 shadow-sm group relative">
+          <iconify-icon icon="solar:layers-minimalistic-linear" class="text-slate-500 group-hover:text-slate-900"></iconify-icon>
+          Admin Queue
+          <span class="absolute right-2 w-1.5 h-1.5 rounded-full bg-[#30A612]"></span>
+        </button>
+
+        
+      </nav>
+
+      <!-- User Profile Stub -->
+      <div class="p-3 border-t border-[#E1E4E8] bg-[#F8F9FA]">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 border border-[#E1E4E8] flex items-center justify-center">
+            <span class="text-xs font-bold text-slate-600">JD</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-slate-900">John Doe</span>
+            <span class="text-[10px] text-slate-500">SysAdmin</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full bg-white relative overflow-hidden">
+      <!-- PAGE 8: ADMIN QUEUE -->
+      <div id="view-queue" class="view-section active h-full flex flex-col">
+        <!-- Sticky Header -->
+        <header class="flex sticky flex-shrink-0 z-10 bg-white h-14 border-[#E1E4E8] border-b pr-6 pl-6 top-0 items-center justify-between">
+          <div class="flex items-center gap-4">
+            <h1 class="text-base font-semibold tracking-tight text-slate-900">
+              Admin Queue (Internal)
+            </h1>
+            <span class="bg-slate-100 text-slate-500 px-2 py-0.5 rounded text-[10px] font-mono border border-slate-200">
+              14 Active
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <!-- Search Bar -->
+            <div class="relative w-64 group">
+              <iconify-icon icon="solar:magnifer-linear" class="absolute left-2.5 top-2 text-slate-400 group-hover:text-slate-600 transition-colors"></iconify-icon>
+              <input type="text" placeholder="Search ID or User..." class="w-full pl-9 pr-4 py-1.5 text-xs border border-[#E1E4E8] rounded-[4px] focus:outline-none focus:border-slate-400 placeholder:text-slate-400 bg-[#F8F9FA] focus:bg-white transition-all">
+            </div>
+
+            <!-- Status Filter -->
+            <div class="relative">
+              <select class="appearance-none bg-white border border-[#E1E4E8] text-slate-700 text-xs font-medium px-3 py-1.5 pr-8 rounded-[4px] focus:outline-none focus:border-slate-400 cursor-pointer hover:bg-slate-50">
+                <option>Status: All</option>
+                <option>Reviewing</option>
+                <option>Quoted</option>
+                <option>Production</option>
+                <option>Shipping</option>
+                <option>Delivered</option>
+              </select>
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-2.5 top-2 text-slate-400 pointer-events-none text-[10px]"></iconify-icon>
+            </div>
+
+            <div class="w-px bg-[#E1E4E8] h-4 mr-1 ml-1"></div>
+
+            <button class="text-slate-500 hover:text-slate-800 transition-colors p-1.5">
+              <iconify-icon icon="solar:refresh-linear" width="16" class=""></iconify-icon>
+            </button>
+          </div>
+        </header>
+
+        <!-- High Density Data Table -->
+        <div class="flex-1 overflow-y-auto bg-white">
+          <table class="border-collapse text-left w-full">
+            <thead class="sticky z-10 bg-[#F8F9FA] border-[#E1E4E8] border-b top-0">
+              <tr class="">
+                <th class="text-[10px] uppercase font-semibold text-slate-500 tracking-wider w-32 border-[#E1E4E8] border-b pt-2 pr-4 pb-2 pl-4">
+                  Order ID
+                </th>
+                <th class="py-2 px-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider border-b border-[#E1E4E8]">
+                  File
+                </th>
+                <th class="py-2 px-4 w-40 text-[10px] font-semibold text-slate-500 uppercase tracking-wider border-b border-[#E1E4E8]">
+                  Status
+                </th>
+                <th class="py-2 px-4 w-40 text-[10px] font-semibold text-slate-500 uppercase tracking-wider border-b border-[#E1E4E8]">
+                  Assign Price
+                </th>
+                <th class="py-2 px-4 w-32 text-[10px] font-semibold text-slate-500 uppercase tracking-wider border-b border-[#E1E4E8] text-right">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#E1E4E8]">
+              <!-- Row 1: Reviewing -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="pt-2 pr-4 pb-2 pl-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8493
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex gap-2 gap-x-2 gap-y-2 items-center">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      sensor_array_v2.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-reviewing text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B76E00]"></span>
+                    Reviewing
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" placeholder="0.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono bg-white group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#30A612] hover:bg-green-50 transition-colors" title="Commit Price">
+                      <iconify-icon icon="solar:check-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Decline Order">
+                      <iconify-icon icon="solar:close-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8493')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14" class=""></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2: Reviewing -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8492
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      main_board_rev3.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-reviewing text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B76E00]"></span>
+                    Reviewing
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" placeholder="0.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono bg-white group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#30A612] hover:bg-green-50 transition-colors" title="Commit Price">
+                      <iconify-icon icon="solar:check-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Decline Order">
+                      <iconify-icon icon="solar:close-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8492')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14" class=""></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3: Quoted -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8491
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      motor_ctrl_foc.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-quoted text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#006D5D]"></span>
+                    Quoted
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" value="142.50" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono text-slate-900 font-medium bg-slate-50 group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-[#30A612] bg-green-50 hover:bg-green-100 transition-colors" title="Committed">
+                      <iconify-icon icon="solar:check-circle-bold" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8491')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14" class=""></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 4: Quoted -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8490
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      led_matrix_16x.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-quoted text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#006D5D]"></span>
+                    Quoted
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" value="89.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono text-slate-900 font-medium bg-slate-50 group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-[#30A612] bg-green-50 hover:bg-green-100 transition-colors" title="Committed">
+                      <iconify-icon icon="solar:check-circle-bold" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8490')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 5: In Production -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8488
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      power_supply_unit.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-production text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#004085]"></span>
+                    In Production
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-300">
+                      $
+                    </span>
+                    <input disabled="" type="number" value="1250.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-transparent rounded-[3px] text-right font-mono text-slate-400 bg-transparent">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-colors" title="Mark Shipped">
+                      <iconify-icon icon="solar:box-minimalistic-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8488')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 6: Reviewing -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8487
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      rf_module_s9.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-reviewing text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B76E00]"></span>
+                    Reviewing
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" placeholder="0.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono bg-white group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#30A612] hover:bg-green-50 transition-colors" title="Commit Price">
+                      <iconify-icon icon="solar:check-circle-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Decline Order">
+                      <iconify-icon icon="solar:close-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8487')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 7: Reviewing -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8486
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      battery_bms_4s.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-reviewing text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B76E00]"></span>
+                    Reviewing
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" placeholder="0.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono bg-white group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#30A612] hover:bg-green-50 transition-colors" title="Commit Price">
+                      <iconify-icon icon="solar:check-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Decline Order">
+                      <iconify-icon icon="solar:close-circle-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8486')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 8: In Production -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="pt-2 pr-4 pb-2 pl-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8485
+                  </span>
+                </td>
+                <td class="pt-2 pr-4 pb-2 pl-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      controller_mk2.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="pt-2 pr-4 pb-2 pl-4">
+                  <span class="badge-shipping text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#9333ea]"></span>
+                    Shipping
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-300">
+                      $
+                    </span>
+                    <input disabled="" type="number" value="320.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-transparent rounded-[3px] text-right font-mono text-slate-400 bg-transparent">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-300 cursor-not-allowed" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors" title="Mark Delivered">
+                      <iconify-icon icon="solar:check-read-linear" width="14" class=""></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8485')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14" class=""></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 9: Quoted -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8484
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      lidar_adapter.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-delivered text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></span>
+                    Delivered
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-300">
+                      $
+                    </span>
+                    <input disabled="" type="number" value="45.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-transparent rounded-[3px] text-right font-mono text-slate-400 bg-transparent">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-300 cursor-not-allowed" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-emerald-600 bg-emerald-50 cursor-default" title="Order Completed">
+                      <iconify-icon icon="solar:verified-check-bold" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8484')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 10: Reviewing -->
+              <tr class="group hover:bg-[#F4F6F8] transition-colors">
+                <td class="py-2 px-4">
+                  <span class="font-mono text-xs font-bold text-slate-900">
+                    #NC-8483
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:zip-file-linear" class="text-slate-400"></iconify-icon>
+                    <span class="text-xs text-slate-700 font-medium">
+                      camera_mount_pcb.zip
+                    </span>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <span class="badge-reviewing text-[10px] font-medium px-2 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B76E00]"></span>
+                    Reviewing
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  <div class="relative">
+                    <span class="absolute left-2 top-1.5 text-xs text-slate-400">
+                      $
+                    </span>
+                    <input type="number" placeholder="0.00" class="w-28 pl-5 pr-2 py-1 text-xs border border-[#E1E4E8] rounded-[3px] focus:outline-none focus:border-[#8C7AD8] text-right font-mono bg-white group-hover:bg-white transition-colors">
+                  </div>
+                </td>
+                <td class="py-2 px-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="p-1.5 rounded text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors" title="Download Source">
+                      <iconify-icon icon="solar:download-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#30A612] hover:bg-green-50 transition-colors" title="Commit Price">
+                      <iconify-icon icon="solar:check-circle-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Decline Order">
+                      <iconify-icon icon="solar:close-circle-linear" width="14"></iconify-icon>
+                    </button>
+                    <button class="p-1.5 rounded text-slate-400 hover:text-[#8C7AD8] hover:bg-purple-50 transition-colors" title="Open Fulfillment" onclick="openFulfillment('NC-8483')">
+                      <iconify-icon icon="solar:maximize-square-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Table Pagination -->
+          <div class="px-4 py-3 border-t border-[#E1E4E8] bg-[#F8F9FA] flex items-center justify-between">
+            <span class="text-[10px] text-slate-500">
+              Showing
+              <span class="font-medium text-slate-700">1-10</span>
+              of
+              <span class="font-medium text-slate-700">14</span>
+              items
+            </span>
+            <div class="flex items-center gap-1">
+              <button class="w-6 h-6 flex items-center justify-center border border-[#E1E4E8] rounded-[3px] bg-white text-slate-400 cursor-not-allowed">
+                <iconify-icon icon="solar:alt-arrow-left-linear" width="12"></iconify-icon>
+              </button>
+              <button class="w-6 h-6 flex items-center justify-center border border-[#E1E4E8] rounded-[3px] bg-[#E1E4E8] text-slate-700 text-[10px] font-medium">
+                1
+              </button>
+              <button class="w-6 h-6 flex items-center justify-center border border-[#E1E4E8] rounded-[3px] bg-white text-slate-600 hover:bg-slate-50 text-[10px] font-medium">
+                2
+              </button>
+              <button class="w-6 h-6 flex items-center justify-center border border-[#E1E4E8] rounded-[3px] bg-white text-slate-600 hover:bg-slate-50 text-[10px]">
+                <iconify-icon icon="solar:alt-arrow-right-linear" width="12"></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 9: ORDER FULFILLMENT TOOL -->
+      <div id="view-fulfillment" class="view-section h-full flex flex-col bg-[#F8F9FA]">
+        <!-- Breadcrumb / Header -->
+
+        <!-- Fulfillment Content Grid -->
+        <div class="flex-1 overflow-auto pt-6 pr-6 pb-6 pl-6"></div>
+      </div>
+
+      <!-- PAGE 10: USER REGISTRY (CRM) -->
+      <div id="view-crm" class="view-section h-full flex flex-col">
+        <!-- CRM Header -->
+
+        <!-- CRM Grid -->
+        <div class="flex-1 overflow-auto bg-[#F8F9FA] pt-6 pr-6 pb-6 pl-6"></div>
+      </div>
+
+      <!-- System Footer (Global) -->
+      <footer class="bg-white border-t border-[#E1E4E8] h-8 flex items-center justify-between px-4 text-[10px] text-slate-500 font-medium select-none flex-shrink-0 z-20">
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Systems Operational
+          </span>
+          <span class="">v2.4.0-stable</span>
+        </div>
+        <div class="flex items-center gap-4 font-mono">
+          <span>US-EAST-1</span>
+          <span class="text-slate-300">|</span>
+          <span>24ms</span>
+        </div>
+      </footer>
+    </main>
+
+    <script class="">
+      function switchView(viewName) {
+        document.querySelectorAll('.view-section').forEach(el => {
+          el.classList.remove('active');
+        });
+        document.getElementById('view-' + viewName).classList.add('active');
+      }
+
+      function openFulfillment(id) {
+        const idElement = document.getElementById('fulfillment-id');
+        if(idElement) idElement.innerText = '#' + id;
+        switchView('fulfillment');
+      }
+    </script>
+  
+</body></html>
