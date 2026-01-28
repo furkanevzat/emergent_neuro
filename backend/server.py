@@ -44,7 +44,16 @@ api_router = APIRouter(prefix="/api")
 
 # Helper function to get current user from token
 async def get_current_user(request: Request) -> Optional[User]:
-    token = request.cookies.get("access_token")
+    # Try to get token from Authorization header first
+    auth_header = request.headers.get("Authorization")
+    token = None
+    
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.replace("Bearer ", "")
+    else:
+        # Fallback to cookie
+        token = request.cookies.get("access_token")
+    
     if not token:
         return None
     
