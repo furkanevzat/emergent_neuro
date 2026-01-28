@@ -350,6 +350,23 @@ async def get_order(order_id: str, user: User = Depends(require_auth)):
     
     return order
 
+# Order details page (client view)
+@app.get("/orders/{order_id}/details", response_class=HTMLResponse)
+async def order_details(request: Request, order_id: str, user: User = Depends(require_auth)):
+    order = await db.orders.find_one({"order_id": order_id}, {"_id": 0})
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Check if user owns the order or is staff
+    if order["user_id"] != user.id and user.role != UserRole.STAFF:
+        raise HTTPException(status_code=403, detail="Access denied")
+    
+    return templates.TemplateResponse("order-details.html", {
+        "request": request,
+        "user": user,
+        "order": order
+    })
+
 # Staff-only APIs
 @api_router.get("/orders/all/list")
 async def get_all_orders(user: User = Depends(require_staff)):
