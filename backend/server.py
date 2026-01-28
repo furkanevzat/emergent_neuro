@@ -15,7 +15,8 @@ from typing import Optional, List
 
 from models import (
     UserCreate, UserLogin, User, UserRole,
-    OrderCreate, Order, OrderUpdate, OrderStatus, OrderSpecs
+    OrderCreate, Order, OrderUpdate, OrderStatus, OrderSpecs,
+    Batch, BatchCreate
 )
 from auth import (
     get_password_hash, verify_password, create_access_token, decode_access_token
