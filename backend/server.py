@@ -289,6 +289,34 @@ async def update_order(
     
     return {"message": "Order updated successfully"}
 
+# Form-based order update for admin (server-side)
+@app.post("/staff/orders/{order_id}/update")
+async def update_order_form(
+    request: Request,
+    order_id: str,
+    status: str = Form(...),
+    price: float = Form(...),
+    user: User = Depends(require_staff)
+):
+    order = await db.orders.find_one({"order_id": order_id})
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Update order
+    update_doc = {
+        "status": status,
+        "price": price,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.orders.update_one(
+        {"order_id": order_id},
+        {"$set": update_doc}
+    )
+    
+    # Redirect back to admin queue
+    return RedirectResponse(url="/staff/queue", status_code=303)
+
 # Include API router
 app.include_router(api_router)
 
