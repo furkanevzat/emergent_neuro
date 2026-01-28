@@ -105,12 +105,14 @@ async def dashboard(request: Request, user: User = Depends(require_auth)):
         "orders": orders
     })
 
-@app.get("/order/new", response_class=HTMLResponse)
-async def new_order(request: Request, user: User = Depends(require_auth)):
-    return templates.TemplateResponse("client-order-configuration.html", {
-        "request": request,
-        "user": user
-    })
+# Note: /order/new is served from frontend/public/client-order-configuration.html
+# Backend route not needed due to Kubernetes ingress routing
+# @app.get("/order/new", response_class=HTMLResponse)
+# async def new_order(request: Request, user: User = Depends(require_auth)):
+#     return templates.TemplateResponse("client-order-configuration.html", {
+#         "request": request,
+#         "user": user
+#     })
 
 @app.get("/staff/queue", response_class=HTMLResponse)
 async def admin_queue(request: Request, user: User = Depends(require_staff)):
