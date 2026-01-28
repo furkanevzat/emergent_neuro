@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurocircuit | Order #{{ order.order_id }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e1e4e8;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+      }
+
+      /* Buttons & Badges */
+      .btn-primary {
+        background: linear-gradient(90deg, #30a612 0%, #62c749 100%);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid transparent;
+      }
+
+      .badge-yellow {
+        background-color: #FEFCE8;
+        color: #854D0E;
+        border-color: #FEF9C3;
+      }
+
+      .badge-green {
+        background-color: #F0FDF4;
+        color: #15803D;
+        border-color: #DCFCE7;
+      }
+
+      .badge-blue {
+        background-color: #EFF6FF;
+        color: #1E40AF;
+        border-color: #DBEAFE;
+      }
+
+      .badge-purple {
+        background-color: #F3E8FF;
+        color: #6B21A8;
+        border-color: #E9D5FF;
+      }
+
+      .badge-gray {
+        background-color: #F8F9FA;
+        color: #475569;
+        border-color: #E2E8F0;
+      }
+
+      .info-card {
+        background: white;
+        border: 1px solid #E1E4E8;
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #F1F3F5;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .progress-step {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+      }
+
+      .progress-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        width: 100%;
+        height: 2px;
+        background: #E1E4E8;
+        z-index: -1;
+      }
+
+      .progress-step.active:not(:last-child)::after {
+        background: #30a612;
+      }
+
+      .progress-step.completed:not(:last-child)::after {
+        background: #30a612;
+      }
+    </style>
+</head>
+<body class="bg-[#F8F9FA] text-slate-800 h-screen flex overflow-hidden">
+    <!-- Client Sidebar -->
+    <aside class="w-64 bg-white border-r border-[#E1E4E8] flex flex-col h-full flex-shrink-0 z-20">
+      <!-- Logo Area -->
+      <div class="flex h-14 border-[#E1E4E8] border-b pr-4 pl-4 items-center">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 bg-slate-900 rounded-[4px] flex items-center justify-center text-white">
+            <span class="font-bold text-xs">N</span>
+          </div>
+          <span class="font-semibold text-sm tracking-tight text-slate-900">
+            Neurocircuit
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto pt-4 pr-2 pb-2 pl-2 space-y-1">
+        <a href="/dashboard" class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <iconify-icon icon="solar:widget-linear" width="16"></iconify-icon>
+          Dashboard
+        </a>
+
+        <a href="/order/new" class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <iconify-icon icon="solar:add-circle-linear" width="16"></iconify-icon>
+          New Order
+        </a>
+
+        <a href="/home.html" class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <iconify-icon icon="solar:logout-linear" width="16"></iconify-icon>
+          Logout
+        </a>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="p-3 border-t border-[#E1E4E8]">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-slate-100 border border-[#E1E4E8] flex items-center justify-center">
+            <span class="text-xs font-bold text-slate-600">
+              {% if user.name %}
+                {{ user.name[:2].upper() }}
+              {% else %}
+                --
+              {% endif %}
+            </span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-slate-900">{{ user.name }}</span>
+            <span class="text-[10px] text-slate-500">{{ user.email }}</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-white">
+      <!-- Header with Back Button -->
+      <header class="border-b border-[#E1E4E8] px-8 py-5 bg-white sticky top-0 z-10">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="/dashboard" class="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              <iconify-icon icon="solar:arrow-left-linear" width="20"></iconify-icon>
+              Back to Dashboard
+            </a>
+            <div class="h-6 w-px bg-[#E1E4E8]"></div>
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-3">
+                <h1 class="text-xl font-semibold text-slate-900 tracking-tight">Order #{{ order.order_id }}</h1>
+                {% if order.status == 'reviewing' %}
+                  <span class="badge badge-yellow">Reviewing</span>
+                {% elif order.status == 'quoted' %}
+                  <span class="badge badge-blue">Quoted</span>
+                {% elif order.status == 'pooling' %}
+                  <span class="badge badge-purple">Pooling</span>
+                {% elif order.status == 'production' %}
+                  <span class="badge badge-blue">Production</span>
+                {% elif order.status == 'shipped' %}
+                  <span class="badge badge-green">Shipped</span>
+                {% elif order.status == 'delivered' %}
+                  <span class="badge badge-green">Delivered</span>
+                {% else %}
+                  <span class="badge badge-gray">{{ order.status }}</span>
+                {% endif %}
+              </div>
+              <p class="text-xs text-slate-500">
+                Submitted on {{ order.submitted_at[:10] }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="flex-1 overflow-y-auto p-8">
+        <div class="max-w-6xl mx-auto">
+          <!-- Progress Timeline -->
+          <div class="mb-8 bg-white border border-[#E1E4E8] rounded-xl p-6">
+            <h2 class="text-sm font-semibold text-slate-900 mb-6">Order Progress</h2>
+            <div class="flex items-start justify-between">
+              <div class="progress-step {% if order.status in ['reviewing', 'quoted', 'pooling', 'production', 'shipped', 'delivered'] %}completed{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status in ['reviewing', 'quoted', 'pooling', 'production', 'shipped', 'delivered'] %}bg-green-600{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:document-text-bold" width="20" class="{% if order.status in ['reviewing', 'quoted', 'pooling', 'production', 'shipped', 'delivered'] %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Submitted</span>
+                <span class="text-[10px] text-slate-500 mt-1">{{ order.submitted_at[:10] }}</span>
+              </div>
+
+              <div class="progress-step {% if order.status in ['quoted', 'pooling', 'production', 'shipped', 'delivered'] %}completed{% elif order.status == 'reviewing' %}active{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status in ['quoted', 'pooling', 'production', 'shipped', 'delivered'] %}bg-green-600{% elif order.status == 'reviewing' %}bg-yellow-500{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:eye-bold" width="20" class="{% if order.status in ['quoted', 'pooling', 'production', 'shipped', 'delivered', 'reviewing'] %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Review</span>
+                {% if order.status == 'reviewing' %}
+                  <span class="text-[10px] text-yellow-600 mt-1 font-medium">In Progress</span>
+                {% endif %}
+              </div>
+
+              <div class="progress-step {% if order.status in ['pooling', 'production', 'shipped', 'delivered'] %}completed{% elif order.status == 'quoted' %}active{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status in ['pooling', 'production', 'shipped', 'delivered'] %}bg-green-600{% elif order.status == 'quoted' %}bg-blue-500{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:tag-price-bold" width="20" class="{% if order.status in ['pooling', 'production', 'shipped', 'delivered', 'quoted'] %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Quoted</span>
+                {% if order.status == 'quoted' %}
+                  <span class="text-[10px] text-blue-600 mt-1 font-medium">Ready for Payment</span>
+                {% endif %}
+              </div>
+
+              <div class="progress-step {% if order.status in ['production', 'shipped', 'delivered'] %}completed{% elif order.status == 'pooling' %}active{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status in ['production', 'shipped', 'delivered'] %}bg-green-600{% elif order.status == 'pooling' %}bg-purple-500{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:hammer-bold" width="20" class="{% if order.status in ['production', 'shipped', 'delivered', 'pooling'] %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Production</span>
+                {% if order.status in ['pooling', 'production'] %}
+                  <span class="text-[10px] text-purple-600 mt-1 font-medium">Manufacturing</span>
+                {% endif %}
+              </div>
+
+              <div class="progress-step {% if order.status in ['shipped', 'delivered'] %}completed{% elif order.status == 'production' %}active{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status in ['shipped', 'delivered'] %}bg-green-600{% elif order.status == 'production' %}bg-blue-500{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:box-bold" width="20" class="{% if order.status in ['shipped', 'delivered', 'production'] %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Shipped</span>
+              </div>
+
+              <div class="progress-step {% if order.status == 'delivered' %}completed{% endif %}">
+                <div class="w-10 h-10 rounded-full {% if order.status == 'delivered' %}bg-green-600{% else %}bg-gray-200{% endif %} flex items-center justify-center mb-2">
+                  <iconify-icon icon="solar:check-circle-bold" width="20" class="{% if order.status == 'delivered' %}text-white{% else %}text-gray-400{% endif %}"></iconify-icon>
+                </div>
+                <span class="text-xs font-medium text-slate-700">Delivered</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Content Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column: Details -->
+            <div class="lg:col-span-2 space-y-6">
+              <!-- PCB Specifications Card -->
+              <div class="info-card">
+                <h2 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <iconify-icon icon="solar:widget-2-linear" width="24" class="text-green-600"></iconify-icon>
+                  PCB Specifications
+                </h2>
+                <div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Layers</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.layers }} Layers</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Substrate Material</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.substrate }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Board Thickness</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.thickness }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Quantity</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.quantity }} pieces</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Surface Finish</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.finish }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Solder Mask Color</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.mask_color }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Silkscreen Color</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.silkscreen }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="text-sm text-slate-600">Copper Weight</span>
+                    <span class="text-sm font-semibold text-slate-900">{{ order.specs.copper_weight }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gerber Analysis Card -->
+              {% if order.specs.analysis != 'no_file' %}
+              <div class="info-card">
+                <h2 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <iconify-icon icon="solar:document-add-linear" width="24" class="text-green-600"></iconify-icon>
+                  Gerber File Analysis
+                </h2>
+                
+                {% if order.specs.analysis == 'success' %}
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <iconify-icon icon="solar:check-circle-bold" width="20" class="text-green-600"></iconify-icon>
+                    <span class="text-sm font-semibold text-green-900">Analysis Successful</span>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                      <span class="text-green-700">Detected Layers:</span>
+                      <span class="font-semibold text-green-900">{{ order.specs.layer_count }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span class="text-green-700">Board Dimensions:</span>
+                      <span class="font-semibold text-green-900">{{ order.specs.board_width_mm }} × {{ order.specs.board_height_mm }} mm</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span class="text-green-700">Board Area:</span>
+                      <span class="font-semibold text-green-900">{{ order.specs.board_area_cm2 }} cm²</span>
+                    </div>
+                    {% if order.specs.analysis_timestamp %}
+                    <div class="flex justify-between text-xs pt-2 border-t border-green-200 mt-3">
+                      <span class="text-green-600">Analyzed:</span>
+                      <span class="text-green-700">{{ order.specs.analysis_timestamp[:10] }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% elif order.specs.analysis == 'partial' %}
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <iconify-icon icon="solar:danger-triangle-linear" width="20" class="text-amber-600"></iconify-icon>
+                    <span class="text-sm font-semibold text-amber-900">Partial Analysis</span>
+                  </div>
+                  <p class="text-xs text-amber-700">
+                    {% if order.specs.note %}
+                      {{ order.specs.note }}
+                    {% else %}
+                      Some board details could not be extracted from the Gerber file.
+                    {% endif %}
+                  </p>
+                  {% if order.specs.layer_count %}
+                  <p class="text-xs text-amber-700 mt-2">Detected {{ order.specs.layer_count }} copper layers</p>
+                  {% endif %}
+                </div>
+                {% elif order.specs.analysis == 'failed' %}
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <iconify-icon icon="solar:close-circle-linear" width="20" class="text-red-600"></iconify-icon>
+                    <span class="text-sm font-semibold text-red-900">Analysis Failed</span>
+                  </div>
+                  <p class="text-xs text-red-700">Unable to analyze the Gerber file. Manual review required.</p>
+                  {% if order.specs.error %}
+                  <p class="text-xs text-red-600 mt-2 font-mono">{{ order.specs.error }}</p>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+
+              <!-- Order History / Notes -->
+              <div class="info-card">
+                <h2 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <iconify-icon icon="solar:history-linear" width="24" class="text-slate-600"></iconify-icon>
+                  Order Timeline
+                </h2>
+                <div class="space-y-3">
+                  <div class="flex gap-3 pb-3 border-b border-[#F1F3F5]">
+                    <div class="flex-shrink-0 w-2 h-2 mt-1.5 rounded-full bg-green-600"></div>
+                    <div class="flex-1">
+                      <p class="text-sm font-medium text-slate-900">Order Submitted</p>
+                      <p class="text-xs text-slate-500 mt-1">{{ order.submitted_at[:19].replace('T', ' ') }}</p>
+                    </div>
+                  </div>
+                  {% if order.updated_at != order.submitted_at %}
+                  <div class="flex gap-3 pb-3">
+                    <div class="flex-shrink-0 w-2 h-2 mt-1.5 rounded-full bg-blue-500"></div>
+                    <div class="flex-1">
+                      <p class="text-sm font-medium text-slate-900">Status Updated</p>
+                      <p class="text-xs text-slate-500 mt-1">{{ order.updated_at[:19].replace('T', ' ') }}</p>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Pricing & Actions -->
+            <div class="space-y-6">
+              <!-- Pricing Card -->
+              <div class="info-card">
+                <h2 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <iconify-icon icon="solar:dollar-linear" width="24" class="text-green-600"></iconify-icon>
+                  Pricing
+                </h2>
+                
+                {% if order.price > 0 %}
+                <div class="text-center py-4 border-b border-[#F1F3F5] mb-4">
+                  <div class="text-3xl font-bold text-slate-900 mb-2">${{ "%.2f"|format(order.price) }}</div>
+                  <div class="text-sm text-slate-500">Final Price</div>
+                </div>
+                {% if order.status == 'quoted' %}
+                <button class="w-full bg-green-600 text-white font-medium text-sm py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                  <iconify-icon icon="solar:card-linear" width="20"></iconify-icon>
+                  Proceed to Payment
+                </button>
+                <p class="text-xs text-slate-500 text-center mt-3">
+                  Accept quote to proceed with production
+                </p>
+                {% else %}
+                <div class="text-center text-sm text-slate-600">
+                  Payment processed
+                </div>
+                {% endif %}
+                {% elif order.estimated_price %}
+                <div class="text-center py-4">
+                  <div class="text-2xl font-bold text-amber-600 mb-2">${{ "%.2f"|format(order.estimated_price) }}</div>
+                  <div class="text-xs text-slate-500">Estimated Price</div>
+                  <div class="text-xs text-slate-400 mt-2">Final price pending admin review</div>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-4">
+                  <p class="text-xs text-amber-700 text-center">
+                    <iconify-icon icon="solar:info-circle-linear" width="16" class="inline mb-0.5"></iconify-icon>
+                    Our team is reviewing your order. You'll receive a final quote within 24 hours.
+                  </p>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                  <div class="text-sm text-slate-500 mb-2">Price Pending Review</div>
+                  <iconify-icon icon="solar:clock-circle-linear" width="32" class="text-slate-300"></iconify-icon>
+                </div>
+                {% endif %}
+              </div>
+
+              <!-- File Download Card -->
+              {% if order.gerber_file %}
+              <div class="info-card">
+                <h2 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <iconify-icon icon="solar:file-download-linear" width="24" class="text-green-600"></iconify-icon>
+                  Files
+                </h2>
+                <a href="/uploads/{{ order.gerber_file }}" download class="flex items-center justify-center gap-2 w-full bg-green-600 text-white font-medium text-sm py-3 rounded-lg hover:bg-green-700 transition-colors">
+                  <iconify-icon icon="solar:download-linear" width="20"></iconify-icon>
+                  Download Gerber Files
+                </a>
+                <p class="text-xs text-slate-500 text-center mt-3">
+                  {{ order.gerber_file }}
+                </p>
+              </div>
+              {% endif %}
+
+              <!-- Support Card -->
+              <div class="info-card bg-slate-50">
+                <h2 class="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                  <iconify-icon icon="solar:help-linear" width="20" class="text-slate-600"></iconify-icon>
+                  Need Help?
+                </h2>
+                <p class="text-xs text-slate-600 mb-3">
+                  Have questions about your order? Our team is here to help.
+                </p>
+                <button class="w-full border border-slate-300 text-slate-700 font-medium text-sm py-2 rounded-lg hover:bg-white transition-colors">
+                  Contact Support
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+</body>
+</html>
