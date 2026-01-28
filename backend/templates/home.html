@@ -1,0 +1,606 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurocircuit | PCB Pooling Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+
+      /* Custom scrollbar for technical feel */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #F8F9FA; }
+      ::-webkit-scrollbar-thumb { background: #E1E4E8; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+
+      /* Technical Background Grid */
+      .tech-grid {
+          background-image: linear-gradient(#E1E4E8 1px, transparent 1px),
+          linear-gradient(to right, #E1E4E8 1px, transparent 1px);
+          background-size: 40px 40px;
+          mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      }
+
+      /* Custom Range Slider */
+      input[type=range]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 2px solid #30A612; /* Updated to Green Primary */
+          cursor: pointer;
+          margin-top: -6px;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 4px;
+          cursor: pointer;
+          background: #E1E4E8;
+          border-radius: 2px;
+      }
+    </style>
+  <link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }</style></head>
+  <body class="bg-[#F8F9FA] text-slate-700 antialiased selection:bg-[#30A612] selection:text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-[#E1E4E8]">
+      <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <!-- Logo Section -->
+        <a href="#" class="flex items-center">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Neurocircuit" class="h-8 w-auto object-contain">
+        </a>
+        
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500">
+          <a href="#" class="hover:text-slate-900 transition-colors">
+            Capabilities
+          </a>
+          <a href="#" class="hover:text-slate-900 transition-colors">
+            Pooling Logic
+          </a>
+          <a href="#" class="hover:text-slate-900 transition-colors">Docs</a>
+        </div>
+        <div class="flex items-center gap-4" id="nav-auth-section">
+          <a href="signin.html" class="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-md hover:bg-slate-50 transition-colors">
+            Sign In
+          </a>
+          <a href="signup.html" class="text-sm font-medium bg-gradient-to-r from-[#30A612] to-[#62C749] text-white px-4 py-2 rounded-md hover:shadow-lg hover:shadow-green-500/20 hover:opacity-90 transition-all shadow-sm">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 relative">
+      <!-- Background Grid -->
+      <div class="absolute inset-0 z-0 pointer-events-none tech-grid h-[800px] opacity-60"></div>
+
+      <div class="max-w-5xl mx-auto px-4 relative z-10">
+        <!-- Hero Header -->
+        <div class="text-center mb-12 pt-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E1E4E8] shadow-sm mb-6 animate-fade-in-up">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#62C749] opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-[#30A612]"></span>
+            </span>
+            <span class="text-xs font-medium text-slate-600 uppercase tracking-wide">
+              Fab v2.4 Operational
+            </span>
+          </div>
+          <h1 class="md:text-6xl text-4xl font-semibold text-slate-900 tracking-tight mb-6 leading-[1.1]">
+            Pooled PCB Manufacturing
+            <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#30A612] to-[#62C749]">and Assembling</span>
+          </h1>
+          <p class="leading-relaxed text-lg font-light text-slate-500 max-w-2xl mr-auto ml-auto">
+  Specialized PCB Prototyping and Pooling platform designed to bridge the gap between individual hardware engineers in
+  Türkiye.
+</p>
+        </div>
+
+        <!-- The Interface -->
+        <div class="bg-white rounded-xl border border-[#E1E4E8] shadow-xl shadow-slate-200/40 overflow-hidden ring-1 ring-slate-900/5">
+          <!-- 1. Drop Zone -->
+          <div class="md:p-12 p-8 transition-all duration-300 group cursor-pointer bg-slate-50/30 border-b border-[#E1E4E8] relative" id="drop-zone">
+            <input type="file" id="file-upload" class="hidden">
+
+            <!-- Empty State -->
+            <div id="empty-state" class="flex flex-col items-center justify-center transition-all duration-200 py-8">
+              <div class="w-20 h-20 rounded-2xl bg-white border-2 border-dashed border-slate-200 flex items-center justify-center mb-6 group-hover:border-[#30A612] group-hover:scale-105 transition-all shadow-sm">
+                <iconify-icon icon="solar:cloud-upload-linear" width="32" class="text-slate-400 group-hover:text-[#30A612] transition-colors"></iconify-icon>
+              </div>
+              <h3 class="text-base font-semibold text-slate-900 mb-1">
+                Upload Gerber Archive
+              </h3>
+              <p class="text-sm text-slate-500">
+                Drag &amp; drop .zip or .rar files (Max 50MB)
+              </p>
+            </div>
+
+            <!-- Uploaded State (Hidden by default) -->
+            <div id="uploaded-state" class="hidden flex-col items-center justify-center py-6">
+              <div class="flex items-center justify-between w-full max-w-md p-4 bg-white border border-green-200 rounded-lg shadow-sm mb-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-[#30A612]">
+                    <iconify-icon icon="solar:file-check-linear" width="20"></iconify-icon>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">
+                      project_alpha_v2.zip
+                    </p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wide">
+                      12.4 MB • Ready to Parse
+                    </p>
+                  </div>
+                </div>
+                <button onclick="resetUpload()" class="p-2 hover:bg-slate-50 rounded text-slate-400 hover:text-red-500 transition-colors">
+                  <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                </button>
+              </div>
+              <a href="signin.html" class="group relative inline-flex items-center justify-center gap-2 px-8 py-3 text-sm font-semibold text-white transition-all duration-200 bg-gradient-to-r from-[#30A612] to-[#62C749] rounded-lg hover:shadow-lg hover:shadow-green-500/20 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                Proceed to Analysis
+                <iconify-icon icon="solar:arrow-right-linear" width="18" class="group-hover:translate-x-0.5 transition-transform"></iconify-icon>
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Configuration Panel -->
+          <div class="p-8 bg-white">
+            <div class="flex items-center justify-between mb-8 border-b border-[#E1E4E8] pb-4">
+              <div class="flex items-center gap-2">
+                <iconify-icon icon="solar:settings-minimalistic-linear" class="text-slate-400" width="20"></iconify-icon>
+                <h3 class="text-sm font-semibold text-slate-900">
+                  Fabrication Parameters
+                </h3>
+              </div>
+              <span class="text-xs text-slate-400 font-mono">
+                ID: REF-00-1928
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <!-- Material Config -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Substrate
+                </label>
+                <div class="relative group">
+                  <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-lg py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-[#8C7AD8] focus:ring-1 focus:ring-[#8C7AD8] shadow-sm transition-shadow">
+                    <option>FR-4 Standard (TG150)</option>
+                    <option>FR-4 High TG (TG170)</option>
+                    <option>Aluminum Core</option>
+                    <option>Rogers 4350B</option>
+                  </select>
+                  <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-3 text-slate-400 pointer-events-none group-hover:text-slate-600" width="14"></iconify-icon>
+                </div>
+              </div>
+
+              <!-- Layer Stackup -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Layers
+                </label>
+                <div class="flex bg-[#F1F3F5] rounded-lg p-1 border border-[#E1E4E8]">
+                  <button class="flex-1 py-1.5 text-xs font-medium rounded-md shadow-sm bg-white text-slate-900 ring-1 ring-black/5">
+                    2
+                  </button>
+                  <button class="flex-1 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                    4
+                  </button>
+                  <button class="flex-1 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                    6
+                  </button>
+                  <button class="flex-1 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                    8
+                  </button>
+                </div>
+              </div>
+
+              <!-- PCB Thickness -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Thickness
+                </label>
+                <div class="relative group">
+                  <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-lg py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-[#8C7AD8] focus:ring-1 focus:ring-[#8C7AD8] shadow-sm transition-shadow">
+                    <option>0.6 mm</option>
+                    <option>0.8 mm</option>
+                    <option>1.0 mm</option>
+                    <option>1.2 mm</option>
+                    <option selected="">1.6 mm</option>
+                    <option>2.0 mm</option>
+                  </select>
+                  <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-3 text-slate-400 pointer-events-none group-hover:text-slate-600" width="14"></iconify-icon>
+                </div>
+              </div>
+
+              <!-- Quantity Slider -->
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                    Quantity
+                  </label>
+                  <span class="text-[10px] font-mono text-slate-900 bg-slate-100 px-1.5 rounded">
+                    10 pcs
+                  </span>
+                </div>
+                <input type="range" min="5" max="100" step="5" value="10" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#30A612]">
+              </div>
+
+              <!-- Surface Finish -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Finish
+                </label>
+                <div class="relative group">
+                  <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-lg py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-[#8C7AD8] focus:ring-1 focus:ring-[#8C7AD8] shadow-sm transition-shadow">
+                    <option>HASL (Lead-Free)</option>
+                    <option>ENIG (Immersion Gold)</option>
+                    <option>OSP</option>
+                    <option>Hard Gold</option>
+                  </select>
+                  <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-3 text-slate-400 pointer-events-none group-hover:text-slate-600" width="14"></iconify-icon>
+                </div>
+              </div>
+
+              <!-- Solder Mask -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Mask Color
+                </label>
+                <div class="flex gap-3">
+                  <div class="w-6 h-6 rounded-full bg-[#15803d] border border-slate-300 ring-2 ring-offset-2 ring-slate-200 cursor-pointer shadow-sm"></div>
+                  <div class="w-6 h-6 rounded-full bg-[#1e40af] border border-slate-200 cursor-pointer opacity-50 hover:opacity-100 hover:ring-2 hover:ring-offset-2 hover:ring-slate-200 transition-all shadow-sm"></div>
+                  <div class="w-6 h-6 rounded-full bg-[#b91c1c] border border-slate-200 cursor-pointer opacity-50 hover:opacity-100 hover:ring-2 hover:ring-offset-2 hover:ring-slate-200 transition-all shadow-sm"></div>
+                  <div class="w-6 h-6 rounded-full bg-[#111827] border border-slate-200 cursor-pointer opacity-50 hover:opacity-100 hover:ring-2 hover:ring-offset-2 hover:ring-slate-200 transition-all shadow-sm"></div>
+                  <div class="w-6 h-6 rounded-full bg-white border border-slate-200 cursor-pointer opacity-50 hover:opacity-100 hover:ring-2 hover:ring-offset-2 hover:ring-slate-200 transition-all shadow-sm"></div>
+                </div>
+              </div>
+
+              <!-- Silkscreen -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Silkscreen
+                </label>
+                <div class="flex gap-2">
+                  <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+                    <input type="radio" name="silk" checked="" class="accent-[#30A612]">
+                    White
+                  </label>
+                  <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer ml-2">
+                    <input type="radio" name="silk" class="accent-[#30A612]">
+                    Black
+                  </label>
+                </div>
+              </div>
+
+              <!-- Copper Weight -->
+              <div class="space-y-3">
+                <label class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Copper Weight
+                </label>
+                <div class="flex bg-[#F1F3F5] rounded-lg p-1 border border-[#E1E4E8]">
+                  <button class="flex-1 py-1.5 text-xs font-medium rounded-md shadow-sm bg-white text-slate-900 ring-1 ring-black/5">
+                    1oz
+                  </button>
+                  <button class="flex-1 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                    2oz
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How It Works (Pipeline) -->
+      <section class="max-w-6xl mx-auto px-4 mt-32">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl font-semibold text-slate-900 tracking-tight">
+            The Pooling Pipeline
+          </h2>
+          <p class="text-sm text-slate-500 mt-3 font-light">
+            Automated optimization for batch manufacturing in Turkey.
+          </p>
+        </div>
+
+        <div class="relative">
+          <!-- Connecting Line (Desktop) -->
+          <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#E1E4E8] to-transparent -z-10"></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <!-- Step 1 -->
+            <div class="relative group">
+              <div class="w-14 h-14 rounded-2xl bg-white border border-[#E1E4E8] flex items-center justify-center text-slate-700 mb-6 mx-auto shadow-sm group-hover:scale-110 group-hover:border-[#30A612] group-hover:text-[#30A612] transition-all duration-300 z-10">
+                <iconify-icon icon="solar:upload-linear" width="24"></iconify-icon>
+              </div>
+              <div class="text-center">
+                <h3 class="text-sm font-semibold text-slate-900 mb-2">
+                  Ingest &amp; Parsing
+                </h3>
+                <p class="text-xs leading-relaxed text-slate-500 px-2">
+                  Secure upload of Gerber data. Automated DFM checks for minimum
+                  trace width and hole sizing.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative group">
+              <div class="w-14 h-14 rounded-2xl bg-white border border-[#E1E4E8] flex items-center justify-center text-slate-700 mb-6 mx-auto shadow-sm group-hover:scale-110 group-hover:border-[#30A612] group-hover:text-[#30A612] transition-all duration-300 z-10">
+                <iconify-icon icon="solar:layers-minimalistic-linear" width="24"></iconify-icon>
+              </div>
+              <div class="text-center">
+                <h3 class="text-sm font-semibold text-slate-900 mb-2">
+                  Batch Optimization
+                </h3>
+                <p class="text-xs leading-relaxed text-slate-500 px-2">
+                  Designs are algorithmically grouped by specs to maximize panel
+                  utility and reduce setup overhead.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative group">
+              <div class="w-14 h-14 rounded-2xl bg-white border border-[#E1E4E8] flex items-center justify-center text-slate-700 mb-6 mx-auto shadow-sm group-hover:scale-110 group-hover:border-[#30A612] group-hover:text-[#30A612] transition-all duration-300 z-10">
+                <iconify-icon icon="solar:bill-check-linear" width="24"></iconify-icon>
+              </div>
+              <div class="text-center">
+                <h3 class="text-sm font-semibold text-slate-900 mb-2">
+                  Verified Quoting
+                </h3>
+                <p class="text-xs leading-relaxed text-slate-500 px-2">
+                  Receive a precise, manual quote within 24-48 hours verified by
+                  production engineers.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="relative group">
+              <div class="w-14 h-14 rounded-2xl bg-white border border-[#E1E4E8] flex items-center justify-center text-slate-700 mb-6 mx-auto shadow-sm group-hover:scale-110 group-hover:border-[#30A612] group-hover:text-[#30A612] transition-all duration-300 z-10">
+                <iconify-icon icon="solar:box-linear" width="24"></iconify-icon>
+              </div>
+              <div class="text-center">
+                <h3 class="text-sm font-semibold text-slate-900 mb-2">
+                  Fabrication &amp; Ship
+                </h3>
+                <p class="text-xs leading-relaxed text-slate-500 px-2">
+                  38-step local fabrication process. Panelized, routed, and
+                  electrically tested before shipment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid Features -->
+      <section class="max-w-6xl mx-auto px-4 mt-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Large Card (Modified to use Lavender Secondary Gradient) -->
+          <div class="md:col-span-2 p-8 rounded-xl bg-gradient-to-br from-white to-[#F8F9FA] border border-[#E1E4E8] relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+              <iconify-icon icon="solar:graph-up-linear" width="120" class="text-[#8C7AD8]"></iconify-icon>
+            </div>
+            <div class="inline-flex items-center gap-2 mb-4">
+              <!-- Soft Lavender Gradient Icon Background -->
+              <span class="p-1.5 rounded-lg bg-gradient-to-br from-[#8C7AD8] to-[#8A88FF] text-white shadow-sm">
+                <iconify-icon icon="solar:chart-square-linear" width="18"></iconify-icon>
+              </span>
+              <h3 class="text-sm font-semibold text-slate-900">
+                Cost Efficiency Algorithm
+              </h3>
+            </div>
+            <p class="text-sm text-slate-500 leading-relaxed max-w-md">
+              Our proprietary pooling engine analyzes geometric complexity and
+              layer counts to find the most cost-effective panel placement for
+              your design, reducing waste by up to 40%.
+            </p>
+          </div>
+
+          <!-- Small Card 1 -->
+          <div class="p-8 rounded-xl bg-white border border-[#E1E4E8] hover:border-slate-300 transition-colors">
+            <div class="inline-flex items-center gap-2 mb-4">
+              <!-- Green Gradient Icon Background -->
+              <span class="p-1.5 rounded-lg bg-gradient-to-br from-[#30A612] to-[#62C749] text-white shadow-sm">
+                <iconify-icon icon="solar:shield-check-linear" width="18"></iconify-icon>
+              </span>
+              <h3 class="text-sm font-semibold text-slate-900">IP Security</h3>
+            </div>
+            <p class="text-xs text-slate-500 leading-5">
+              End-to-end encryption. Your IP is isolated within our environment
+              and never shared with third-party brokers.
+            </p>
+          </div>
+
+          <!-- Small Card 2 -->
+          <div class="p-8 rounded-xl bg-white border border-[#E1E4E8] hover:border-slate-300 transition-colors">
+            <div class="inline-flex items-center gap-2 mb-4">
+               <!-- Lavender Gradient Icon Background -->
+              <span class="p-1.5 rounded-lg bg-gradient-to-br from-[#8C7AD8] to-[#8A88FF] text-white shadow-sm">
+                <iconify-icon icon="solar:clock-circle-linear" width="18"></iconify-icon>
+              </span>
+              <h3 class="text-sm font-semibold text-slate-900">Rapid Turn</h3>
+            </div>
+            <p class="text-xs text-slate-500 leading-5">
+              Local production eliminates customs delays. Standard 5-day turn on
+              2-layer boards.
+            </p>
+          </div>
+
+          <!-- Wide Card -->
+          <div class="md:col-span-2 lg:col-span-2 p-8 rounded-xl bg-white border border-[#E1E4E8] flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1">
+              <div class="inline-flex items-center gap-2 mb-4">
+                <span class="p-1.5 rounded-lg bg-orange-50 text-orange-600 border border-orange-100">
+                  <iconify-icon icon="solar:help-linear" width="18"></iconify-icon>
+                </span>
+                <h3 class="text-sm font-semibold text-slate-900">
+                  Engineering Support
+                </h3>
+              </div>
+              <p class="text-xs text-slate-500 leading-5 mb-4">
+                Direct access to CAM engineers via Slack or Email. No support
+                tickets, just answers.
+              </p>
+              <a href="#" class="text-xs font-medium text-slate-900 hover:text-[#8C7AD8] transition-colors flex items-center gap-1">
+                Meet the team
+                <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+              </a>
+            </div>
+            <div class="w-full md:w-1/2 h-32 bg-slate-50 rounded-lg border border-[#E1E4E8] border-dashed flex items-center justify-center text-slate-300">
+              <span class="text-xs font-mono">support_metric_graph.svg</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technical FAQs -->
+      <section class="max-w-2xl mx-auto px-4 mt-32">
+        <h2 class="text-lg font-semibold text-slate-900 mb-8">
+          Technical Specifications
+        </h2>
+        <div class="space-y-4">
+          <details class="group bg-white border border-[#E1E4E8] rounded-lg open:ring-1 open:ring-[#E1E4E8] transition-all">
+            <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-slate-800 select-none">
+              What are the standard drilling tolerances?
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400 transition-transform group-open:rotate-180"></iconify-icon>
+            </summary>
+            <div class="px-4 pb-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-3 mt-1">
+              Standard mechanical drilling tolerance is ±0.075mm. For laser
+              drilling (microvias), tolerances can be held to ±0.05mm. Aspect
+              ratios up to 10:1 are supported on standard 1.6mm boards.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-[#E1E4E8] rounded-lg transition-all">
+            <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-slate-800 select-none">
+              Do you support blind and buried vias?
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400 transition-transform group-open:rotate-180"></iconify-icon>
+            </summary>
+            <div class="px-4 pb-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-3 mt-1">
+              Yes, for 4+ layer boards. Blind vias connect an outer layer to one
+              or more inner layers. Buried vias connect two or more inner
+              layers. Please specify via stackup in your Gerber documentation.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-[#E1E4E8] rounded-lg transition-all">
+            <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-slate-800 select-none">
+              Is V-Scoring available for panelization?
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400 transition-transform group-open:rotate-180"></iconify-icon>
+            </summary>
+            <div class="px-4 pb-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-3 mt-1">
+              Yes. V-scoring requires a minimum board thickness of 0.6mm. We
+              recommend a 1/3 cut depth on both top and bottom. Ensure 0.5mm
+              clearance from copper to the V-cut line.
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#E1E4E8]">
+      <div class="max-w-7xl mx-auto px-4 py-16 flex flex-col md:flex-row justify-between items-start gap-12">
+        <div>
+          <!-- Updated Footer Logo -->
+          <div class="mb-6">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Neurocircuit" class="h-6 w-auto object-contain">
+          </div>
+          <p class="text-xs text-slate-500 max-w-[240px] leading-relaxed">
+            Advanced PCB fabrication for the modern engineer. ISO 9001:2015
+            Certified.
+          </p>
+        </div>
+
+        <div class="flex gap-16 text-xs">
+          <div class="flex flex-col gap-4">
+            <span class="font-semibold text-slate-900">Platform</span>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Documentation
+            </a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Status
+            </a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Terms of Service
+            </a>
+          </div>
+          <div class="flex flex-col gap-4">
+            <span class="font-semibold text-slate-900">Support</span>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Contact Engineering
+            </a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Solder Mask Specs
+            </a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors">
+              Stackup Guides
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 py-6 border-t border-[#E1E4E8] flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 gap-4">
+        <span>© 2023 Neurocircuit Inc.</span>
+        <div class="flex gap-6">
+          <iconify-icon icon="solar:brand-github-linear" width="18" class="hover:text-slate-900 cursor-pointer transition-colors"></iconify-icon>
+          <iconify-icon icon="solar:brand-twitter-linear" width="18" class="hover:text-slate-900 cursor-pointer transition-colors"></iconify-icon>
+          <iconify-icon icon="solar:brand-linkedin-linear" width="18" class="hover:text-slate-900 cursor-pointer transition-colors"></iconify-icon>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Auth Modal Overlay -->
+
+    <script>
+      const dropZone = document.getElementById('drop-zone');
+      const emptyState = document.getElementById('empty-state');
+      const uploadedState = document.getElementById('uploaded-state');
+
+      let hasFile = false;
+
+      // Drag & Drop Interactions
+      dropZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropZone.classList.add('border-[#30A612]', 'bg-green-50/20');
+      });
+
+      dropZone.addEventListener('dragleave', (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('border-[#30A612]', 'bg-green-50/20');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('border-[#30A612]', 'bg-green-50/20');
+          handleFileUpload();
+      });
+
+      dropZone.addEventListener('click', (e) => {
+          if(e.target.closest('button') || e.target.closest('a') || hasFile) return;
+          handleFileUpload();
+      });
+
+      function handleFileUpload() {
+          hasFile = true;
+          emptyState.classList.add('hidden');
+          uploadedState.classList.remove('hidden');
+          uploadedState.classList.add('flex');
+      }
+
+      function resetUpload() {
+          hasFile = false;
+          uploadedState.classList.add('hidden');
+          uploadedState.classList.remove('flex');
+          emptyState.classList.remove('hidden');
+          event.stopPropagation();
+      }
+    </script>
+  
+</body></html>
