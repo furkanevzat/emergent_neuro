@@ -299,6 +299,90 @@ async def get_all_orders(user: User = Depends(require_staff)):
     orders = await db.orders.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(1000)
     return orders
 
+# User Management (Staff only)
+@api_router.get("/users/all")
+async def get_all_users(user: User = Depends(require_staff)):
+    users = await db.users.find({}, {"_id": 0, "password": 0}).sort("created_at", -1).to_list(1000)
+    return users
+
+# Batching/Panelization APIs
+@api_router.post("/batches")
+async def create_batch(
+    batch_data: BatchCreate,
+    user: User = Depends(require_staff)
+):
+    # Verify all orders exist and are in "reviewing" status
+    orders = await db.orders.find(
+        {"order_id": {"$in": batch_data.order_ids}},
+        {"_id": 0}
+    ).to_list(100)
+    
+    if len(orders) != len(batch_data.order_ids):
+        raise HTTPException(status_code=400, detail="Some orders not found")
+    
+    # Create batch
+    batch_id = f"BATCH-{str(uuid.uuid4())[:8].upper()}"
+    now = datetime.now(timezone.utc)
+    
+    batch_doc = {
+        "batch_id": batch_id,
+        "status": "active",
+        "created_at": now.isoformat(),
+        "orders_included": batch_data.order_ids,
+        "total_orders": len(batch_data.order_ids)
+    }
+    
+    await db.batches.insert_one(batch_doc)
+    
+    # Update orders to "pooling" status
+    await db.orders.update_many(
+        {"order_id": {"$in": batch_data.order_ids}},
+        {"$set": {"status": "pooling", "batch_id": batch_id, "updated_at": now.isoformat()}}
+    )
+    
+    return {
+        "batch_id": batch_id,
+        "message": f"Batch created with {len(batch_data.order_ids)} orders",
+        "orders_included": batch_data.order_ids
+    }
+
+@api_router.get("/batches")
+async def get_batches(user: User = Depends(require_staff)):
+    batches = await db.batches.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    return batches
+
+@api_router.get("/batches/{batch_id}")
+async def get_batch(batch_id: str, user: User = Depends(require_staff)):
+    batch = await db.batches.find_one({"batch_id": batch_id}, {"_id": 0})
+    if not batch:
+        raise HTTPException(status_code=404, detail="Batch not found")
+    
+    # Get orders in this batch
+    orders = await db.orders.find(
+        {"order_id": {"$in": batch["orders_included"]}},
+        {"_id": 0}
+    ).to_list(100)
+    
+    batch["orders"] = orders
+    return batch
+
+@api_router.patch("/batches/{batch_id}")
+async def update_batch(
+    batch_id: str,
+    status: str,
+    user: User = Depends(require_staff)
+):
+    batch = await db.batches.find_one({"batch_id": batch_id})
+    if not batch:
+        raise HTTPException(status_code=404, detail="Batch not found")
+    
+    await db.batches.update_one(
+        {"batch_id": batch_id},
+        {"$set": {"status": status}}
+    )
+    
+    return {"message": "Batch updated successfully"}
+
 @api_router.patch("/orders/{order_id}")
 async def update_order(
     order_id: str,
