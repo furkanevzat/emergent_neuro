@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neurocircuit | Admin Queue</title>
+    <title>Neurocircuit | Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -22,9 +22,15 @@
       .badge-yellow { background-color: #FEFCE8; color: #854D0E; border-color: #FEF9C3; }
       .badge-green { background-color: #F0FDF4; color: #15803D; border-color: #DCFCE7; }
       .badge-blue { background-color: #EFF6FF; color: #1E40AF; border-color: #DBEAFE; }
+      .badge-purple { background-color: #F3E8FF; color: #6B21A8; border-color: #E9D5FF; }
       .badge-gray { background-color: #F8F9FA; color: #475569; border-color: #E2E8F0; }
       .modal { display: none; }
       .modal.active { display: flex; }
+      .tab { cursor: pointer; padding: 0.75rem 1.5rem; border-bottom: 2px solid transparent; }
+      .tab.active { border-bottom-color: #30a612; color: #30a612; font-weight: 600; }
+      .tab:not(.active) { color: #64748b; }
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
     </style>
 </head>
 <body class="bg-[#F8F9FA] text-slate-800">
@@ -43,32 +49,103 @@
       </div>
     </nav>
 
-    <main class="pt-24 pb-20">
+    <main class="pt-20 pb-20">
       <div class="max-w-7xl mx-auto px-4">
-        <div class="mb-8">
-          <h1 class="text-2xl font-semibold text-slate-900">Order Review Queue</h1>
-          <p class="text-sm text-slate-500 mt-1">Review and price PCB orders for production pooling</p>
+        <!-- Tabs -->
+        <div class="mb-6 border-b border-[#E1E4E8] flex gap-1">
+          <div class="tab active" onclick="switchTab('orders')" data-testid="orders-tab">
+            <iconify-icon icon="solar:clipboard-list-linear" width="18" class="inline mr-2"></iconify-icon>
+            Order Queue
+          </div>
+          <div class="tab" onclick="switchTab('batches')" data-testid="batches-tab">
+            <iconify-icon icon="solar:layers-minimalistic-linear" width="18" class="inline mr-2"></iconify-icon>
+            Batches
+          </div>
+          <div class="tab" onclick="switchTab('users')" data-testid="users-tab">
+            <iconify-icon icon="solar:users-group-rounded-linear" width="18" class="inline mr-2"></iconify-icon>
+            Users
+          </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-[#E1E4E8] overflow-hidden">
-          <table class="min-w-full divide-y divide-[#E1E4E8]">
-            <thead class="bg-slate-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Order ID</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">User ID</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Specs</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Submitted</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Price</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="orders-table" class="bg-white divide-y divide-[#E1E4E8]">
-              <tr>
-                <td colspan="7" class="px-6 py-8 text-center text-sm text-slate-500">Loading orders...</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- ORDERS TAB -->
+        <div id="orders-tab" class="tab-content active">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-2xl font-semibold text-slate-900">Order Review Queue</h1>
+              <p class="text-sm text-slate-500 mt-1">Review, price, and pool PCB orders</p>
+            </div>
+            <div id="batch-actions" class="hidden flex gap-3">
+              <span class="text-sm text-slate-600 py-2"><span id="selected-count">0</span> selected</span>
+              <button onclick="createBatch()" data-testid="create-batch-btn" class="bg-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-purple-700 flex items-center gap-2">
+                <iconify-icon icon="solar:layers-minimalistic-linear" width="18"></iconify-icon>
+                Create Batch
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-[#E1E4E8] overflow-hidden">
+            <table class="min-w-full divide-y divide-[#E1E4E8]">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th class="px-6 py-3 text-left">
+                    <input type="checkbox" id="select-all" onclick="toggleSelectAll()" class="rounded border-slate-300">
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Order ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">User</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Specs</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Gerber Analysis</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Date</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Price</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table" class="bg-white divide-y divide-[#E1E4E8]">
+                <tr>
+                  <td colspan="9" class="px-6 py-8 text-center text-sm text-slate-500">Loading orders...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BATCHES TAB -->
+        <div id="batches-tab" class="tab-content">
+          <div class="mb-6">
+            <h1 class="text-2xl font-semibold text-slate-900">Active Batches</h1>
+            <p class="text-sm text-slate-500 mt-1">Manage order pooling and panelization</p>
+          </div>
+
+          <div id="batches-container" class="space-y-4">
+            <div class="text-center py-12 text-slate-500">Loading batches...</div>
+          </div>
+        </div>
+
+        <!-- USERS TAB -->
+        <div id="users-tab" class="tab-content">
+          <div class="mb-6">
+            <h1 class="text-2xl font-semibold text-slate-900">User Management</h1>
+            <p class="text-sm text-slate-500 mt-1">View all registered users</p>
+          </div>
+
+          <div class="bg-white rounded-xl border border-[#E1E4E8] overflow-hidden">
+            <table class="min-w-full divide-y divide-[#E1E4E8]">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Email</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Role</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Join Date</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">User ID</th>
+                </tr>
+              </thead>
+              <tbody id="users-table" class="bg-white divide-y divide-[#E1E4E8]">
+                <tr>
+                  <td colspan="5" class="px-6 py-8 text-center text-sm text-slate-500">Loading users...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </main>
@@ -110,6 +187,7 @@
 
     <script>
       const API_BASE = 'https://pcb-pool.preview.emergentagent.com';
+      const selectedOrders = new Set();
       
       function getToken() {
         return localStorage.getItem('access_token');
@@ -120,7 +198,7 @@
         return userStr ? JSON.parse(userStr) : null;
       }
       
-      // Check auth and load user
+      // Check auth
       const user = getUser();
       if (!user || user.role !== 'staff') {
         window.location.href = '/authorization.html';
@@ -129,6 +207,7 @@
       }
 
       let currentOrderId = null;
+      let allOrders = [];
 
       function formatDate(dateStr) {
         return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -139,32 +218,47 @@
           reviewing: '<span class="badge badge-yellow">Reviewing</span>',
           quoted: '<span class="badge badge-blue">Quoted</span>',
           production: '<span class="badge badge-blue">Production</span>',
+          pooling: '<span class="badge badge-purple">Pooling</span>',
           shipped: '<span class="badge badge-green">Shipped</span>',
           delivered: '<span class="badge badge-green">Delivered</span>'
         };
         return badges[status] || '<span class="badge badge-gray">Unknown</span>';
       }
 
+      // Tab switching
+      function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
+        document.getElementById(`${tab}-tab`).classList.add('active');
+        
+        if (tab === 'batches') loadBatches();
+        if (tab === 'users') loadUsers();
+      }
+
+      // Orders management
       async function loadOrders() {
         try {
           const response = await fetch(`${API_BASE}/api/orders/all/list`, {
             headers: { 'Authorization': `Bearer ${getToken()}` }
           });
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch orders');
-          }
+          if (!response.ok) throw new Error('Failed to fetch orders');
 
-          const orders = await response.json();
+          allOrders = await response.json();
           const tbody = document.getElementById('orders-table');
           
-          if (orders.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-sm text-slate-500">No orders yet</td></tr>';
+          if (allOrders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" class="px-6 py-8 text-center text-sm text-slate-500">No orders yet</td></tr>';
             return;
           }
 
-          tbody.innerHTML = orders.map(order => `
+          tbody.innerHTML = allOrders.map(order => `
             <tr class="hover:bg-slate-50" data-testid="admin-order-row-${order.order_id}">
+              <td class="px-6 py-4">
+                ${order.status === 'reviewing' ? `<input type="checkbox" class="order-checkbox rounded border-slate-300" data-order-id="${order.order_id}" onchange="updateSelection()">` : ''}
+              </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="text-sm font-mono font-medium text-slate-900">#${order.order_id}</span>
               </td>
@@ -176,6 +270,16 @@
                   ${order.specs.layers}L • ${order.specs.thickness} • ${order.specs.quantity} pcs<br/>
                   ${order.specs.finish}
                 </div>
+              </td>
+              <td class="px-6 py-4">
+                ${order.specs.analysis === 'success' ? `
+                  <div class="text-xs text-green-600">
+                    ✓ ${order.specs.board_width_mm}×${order.specs.board_height_mm}mm<br/>
+                    ${order.specs.layer_count} layers
+                  </div>
+                ` : order.specs.analysis === 'failed' ? `
+                  <div class="text-xs text-amber-600">⚠ Analysis failed</div>
+                ` : '<div class="text-xs text-slate-400">—</div>'}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="text-xs text-slate-600">${formatDate(order.submitted_at)}</span>
@@ -200,10 +304,142 @@
           `).join('');
         } catch (error) {
           console.error('Error loading orders:', error);
-          document.getElementById('orders-table').innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-sm text-red-600">Error loading orders</td></tr>';
+          document.getElementById('orders-table').innerHTML = '<tr><td colspan="9" class="px-6 py-8 text-center text-sm text-red-600">Error loading orders</td></tr>';
         }
       }
 
+      function updateSelection() {
+        selectedOrders.clear();
+        document.querySelectorAll('.order-checkbox:checked').forEach(cb => {
+          selectedOrders.add(cb.dataset.orderId);
+        });
+        
+        document.getElementById('selected-count').textContent = selectedOrders.size;
+        document.getElementById('batch-actions').classList.toggle('hidden', selectedOrders.size === 0);
+      }
+
+      function toggleSelectAll() {
+        const selectAll = document.getElementById('select-all');
+        document.querySelectorAll('.order-checkbox').forEach(cb => {
+          cb.checked = selectAll.checked;
+        });
+        updateSelection();
+      }
+
+      async function createBatch() {
+        if (selectedOrders.size === 0) {
+          alert('Please select orders to batch');
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/api/batches`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${getToken()}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              order_ids: Array.from(selectedOrders)
+            })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            alert(`Batch ${data.batch_id} created with ${selectedOrders.size} orders!`);
+            selectedOrders.clear();
+            document.getElementById('select-all').checked = false;
+            loadOrders();
+          } else {
+            alert('Failed to create batch');
+          }
+        } catch (error) {
+          console.error('Error creating batch:', error);
+          alert('Error creating batch');
+        }
+      }
+
+      // Batches management
+      async function loadBatches() {
+        try {
+          const response = await fetch(`${API_BASE}/api/batches`, {
+            headers: { 'Authorization': `Bearer ${getToken()}` }
+          });
+
+          const batches = await response.json();
+          const container = document.getElementById('batches-container');
+
+          if (batches.length === 0) {
+            container.innerHTML = '<div class="text-center py-12 text-slate-500">No batches created yet</div>';
+            return;
+          }
+
+          container.innerHTML = batches.map(batch => `
+            <div class="bg-white rounded-xl border border-[#E1E4E8] p-6">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">${batch.batch_id}</h3>
+                  <p class="text-sm text-slate-500">${formatDate(batch.created_at)}</p>
+                </div>
+                <span class="badge badge-purple">${batch.status}</span>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span class="text-slate-500">Orders:</span>
+                  <span class="font-semibold text-slate-900 ml-2">${batch.total_orders}</span>
+                </div>
+                <div class="col-span-2">
+                  <span class="text-slate-500">Order IDs:</span>
+                  <span class="text-xs text-slate-600 ml-2">${batch.orders_included.join(', ')}</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } catch (error) {
+          console.error('Error loading batches:', error);
+        }
+      }
+
+      // Users management
+      async function loadUsers() {
+        try {
+          const response = await fetch(`${API_BASE}/api/users/all`, {
+            headers: { 'Authorization': `Bearer ${getToken()}` }
+          });
+
+          const users = await response.json();
+          const tbody = document.getElementById('users-table');
+
+          if (users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-sm text-slate-500">No users yet</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = users.map(u => `
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4">
+                <span class="text-sm font-medium text-slate-900">${u.name}</span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-sm text-slate-600">${u.email}</span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="badge ${u.role === 'staff' ? 'badge-purple' : 'badge-gray'}">${u.role}</span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-sm text-slate-600">${formatDate(u.created_at)}</span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-xs font-mono text-slate-500">${u.id.substring(0, 12)}...</span>
+              </td>
+            </tr>
+          `).join('');
+        } catch (error) {
+          console.error('Error loading users:', error);
+        }
+      }
+
+      // Modal management
       function openModal(orderId, status, price) {
         currentOrderId = orderId;
         document.getElementById('order-id').value = orderId;
@@ -235,7 +471,7 @@
 
           if (response.ok) {
             closeModal();
-            loadOrders(); // Reload orders
+            loadOrders();
           } else {
             alert('Failed to update order');
           }
@@ -245,11 +481,8 @@
         }
       });
 
-      // Close modal on background click
       document.getElementById('update-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal();
-        }
+        if (e.target === this) closeModal();
       });
 
       // Load orders on page load
