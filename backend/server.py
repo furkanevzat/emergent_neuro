@@ -209,8 +209,10 @@ async def create_order(
     # Generate order ID
     order_id = f"NC-{str(uuid.uuid4())[:8].upper()}"
     
-    # Handle file upload
+    # Handle file upload and analysis
     file_path = None
+    gerber_analysis = {}
+    
     if gerber_file:
         # Save file
         file_extension = gerber_file.filename.split('.')[-1]
@@ -220,7 +222,37 @@ async def create_order(
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(gerber_file.file, buffer)
         
+        # Analyze Gerber file with Gerbonara
+        try:
+            from gerbonara import LayerStack
+            stack = LayerStack.from_zip_file(str(file_path))
+            
+            # Extract layer count
+            layer_count = len([layer for layer in stack.layers if layer is not None])
+            
+            # Get board bounds
+            bounds = stack.board_bounds()
+            if bounds:
+                width_mm = bounds[2] - bounds[0]  # max_x - min_x
+                height_mm = bounds[3] - bounds[1]  # max_y - min_y
+                gerber_analysis = {
+                    "layer_count": layer_count,
+                    "board_width_mm": round(width_mm, 2),
+                    "board_height_mm": round(height_mm, 2),
+                    "analysis": "success"
+                }
+            else:
+                gerber_analysis = {"analysis": "partial", "layer_count": layer_count}
+        except Exception as e:
+            logger.warning(f"Gerber analysis failed for {order_id}: {str(e)}")
+            gerber_analysis = {"analysis": "failed", "error": str(e)[:100]}
+        
         file_path = filename
+    
+    # Merge gerber analysis into specs
+    specs_dict = order_specs.model_dump()
+    if gerber_analysis:
+        specs_dict.update(gerber_analysis)
     
     # Create order document
     now = datetime.now(timezone.utc)
@@ -229,7 +261,7 @@ async def create_order(
         "user_id": user.id,
         "status": OrderStatus.REVIEWING.value,
         "gerber_file": file_path,
-        "specs": order_specs.model_dump(),
+        "specs": specs_dict,
         "price": 0.00,
         "submitted_at": now.isoformat(),
         "updated_at": now.isoformat()
@@ -240,7 +272,8 @@ async def create_order(
     return {
         "order_id": order_id,
         "status": OrderStatus.REVIEWING.value,
-        "message": "Order submitted successfully"
+        "message": "Order submitted successfully",
+        "gerber_analysis": gerber_analysis if gerber_analysis else None
     }
 
 @api_router.get("/orders")
