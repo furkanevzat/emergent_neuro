@@ -1,597 +1,263 @@
-<html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neurocircuit | Order Configuration</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<style>
-body {
-font-family: 'Inter', sans-serif;
-}
-.font-mono {
-font-family: 'JetBrains Mono', monospace;
-}
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-width: 6px;
-height: 6px;
-}
-::-webkit-scrollbar-track {
-background: transparent;
-}
-::-webkit-scrollbar-thumb {
-background: #e1e4e8;
-border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-background: #cbd5e1;
-}
-/* Form Elements */
-.option-btn {
-transition: all 0.2s;
-border: 1px solid #E1E4E8;
-}
-.option-btn:hover {
-border-color: #cbd5e1;
-background-color: #f8f9fa;
-}
-.option-btn.selected {
-border-color: #30A612;
-background-color: #f0fdf4;
-color: #14532d;
-}
-.color-swatch {
-width: 24px;
-height: 24px;
-border-radius: 9999px;
-cursor: pointer;
-position: relative;
-border: 1px solid #E1E4E8;
-}
-.color-swatch.selected::after {
-content: '';
-position: absolute;
-inset: -3px;
-border: 1px solid #30A612;
-border-radius: 9999px;
-}
-/* Toggle Switch */
-.toggle-checkbox:checked {
-right: 0;
-border-color: #30A612;
-}
-.toggle-checkbox:checked + .toggle-label {
-background-color: #30A612;
-}
-/* Gradients */
-.btn-primary {
-background: linear-gradient(90deg, #30a612 0%, #62c749 100%);
-}
-</style>
-<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }</style></head>
-  <body class="bg-[#F8F9FA] text-slate-800 h-screen flex overflow-hidden font-inter">
-    
-    <!-- Client Sidebar -->
-    <aside class="w-64 bg-white border-r border-[#E1E4E8] flex flex-col h-full flex-shrink-0 z-20">
-      <!-- Logo Area -->
-      <div class="flex h-14 border-[#E1E4E8] border-b pr-4 pl-4 items-center">
-        <div class="flex items-center gap-2">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurocircuit | New Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      .btn-primary { background: linear-gradient(90deg, #30a612 0%, #62c749 100%); }
+    </style>
+</head>
+<body class="bg-[#F8F9FA] text-slate-800">
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-[#E1E4E8]">
+      <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/home.html" class="flex items-center gap-2">
           <div class="w-6 h-6 bg-slate-900 rounded-[4px] flex items-center justify-center text-white">
             <span class="font-bold text-xs">N</span>
           </div>
-          <span class="font-semibold text-sm tracking-tight text-slate-900">
-            Neurocircuit
-          </span>
+          <span class="font-semibold text-sm tracking-tight text-slate-900">Neurocircuit</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <a href="/dashboard" class="text-sm font-medium text-slate-600 hover:text-slate-900">Dashboard</a>
+          <a href="/home.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Logout</a>
         </div>
       </div>
+    </nav>
 
-      <!-- Navigation -->
-      <nav class="flex-1 overflow-y-auto pt-4 pr-2 pb-2 pl-2 space-y-1">
-        <button class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-[4px] text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-          <iconify-icon icon="solar:widget-linear" width="16"></iconify-icon>
-          Dashboard
-        </button>
-
-        <button class="flex gap-3 text-xs font-medium text-[#15803d] bg-[#f0fdf4] w-full border-[#DCFCE7] border rounded-[4px] pt-2 pr-3 pb-2 pl-3 items-center">
-  <iconify-icon icon="solar:add-circle-linear" width="16"></iconify-icon>
-  New Order
-</button>
-
-        
-
-        
-
-        <button class="flex hover:bg-slate-50 hover:text-slate-900 transition-colors text-xs font-medium text-slate-500 w-full rounded-[4px] pt-2 pr-3 pb-2 pl-3 gap-x-3 gap-y-3 items-center">
-          <iconify-icon icon="solar:card-linear" width="16" class=""></iconify-icon>
-          Billing
-        </button>
-      </nav>
-
-      <!-- User Profile Stub -->
-      <div class="p-3 border-t border-[#E1E4E8]">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-slate-100 border border-[#E1E4E8] flex items-center justify-center">
-            <span class="text-xs font-bold text-slate-600">AC</span>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xs font-medium text-slate-900">Alex Chenn</span>
-            <span class="text-[10px] text-slate-500">Vector Dynamics</span>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
-      
-      <!-- Stepper Header -->
-      <header class="bg-white border-b border-[#E1E4E8] h-16 flex-shrink-0 px-8 flex items-center justify-between">
-        <h1 class="text-sm font-semibold text-slate-900">Configure Order</h1>
-        
-        <!-- Progress Stepper -->
-        <div class="flex items-center">
-          
-          
-          <div class="flex items-center gap-2">
-            <div class="flex text-[10px] text-white font-mono bg-[#30A612] w-5 h-5 rounded-full items-center justify-center">1</div>
-            <span class="text-xs font-medium text-slate-900">Configure</span>
-          </div>
-          <div class="w-8 h-px bg-[#E1E4E8] mx-2"></div>
-          <div class="flex items-center gap-2 opacity-50">
-            <div class="flex text-[10px] text-slate-400 font-mono bg-white w-5 h-5 border-[#E1E4E8] border rounded-full items-center justify-center">2</div>
-            <span class="text-xs font-medium text-slate-400">Review</span>
-          </div>
-        </div>
-
-        <div class="w-20"></div> <!-- Spacer for centering -->
-      </header>
-
-      <!-- Scrollable Configuration Area -->
-      <div class="flex-1 overflow-y-auto pt-8 pr-8 pb-8 pl-8">
-        <div class="max-w-5xl mx-auto space-y-6">
-          
-          <!-- Section A: Base Parameters -->
-          <section class="overflow-hidden bg-white border-[#E1E4E8] border rounded-md shadow-sm">
-  
-  <!-- 1. Drag & Drop Zone -->
-  <div class="relative group cursor-pointer bg-slate-50 hover:bg-slate-50/80 transition-all duration-300 border-b border-[#E1E4E8] p-10 md:p-12 flex flex-col items-center justify-center text-center" id="drop-zone">
-    <input type="file" id="file-upload" class="hidden">
-    
-    <!-- Empty State -->
-    <div class="flex flex-col items-center transition-transform duration-300 group-hover:scale-[1.01]" id="empty-state">
-      <div class="w-16 h-16 rounded-2xl bg-white border-2 border-dashed border-slate-300 flex items-center justify-center mb-4 shadow-sm group-hover:border-[#30A612] group-hover:shadow-md transition-all">
-        <iconify-icon icon="solar:cloud-upload-linear" class="text-slate-400 group-hover:text-[#30A612] text-3xl transition-colors"></iconify-icon>
-      </div>
-      <h3 class="text-sm font-semibold text-slate-900 mb-1">Upload Gerber Archive</h3>
-      <p class="text-xs text-slate-500 font-medium">Drag &amp; drop .zip or .rar files (Max 50MB)</p>
-    </div>
-  </div>
-
-  <!-- 2. Configuration Panel -->
-  <div class="p-6 bg-white">
-    <!-- Header -->
-    <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#E1E4E8]">
-      <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded bg-slate-50 border border-[#E1E4E8] flex items-center justify-center text-slate-500">
-          <iconify-icon icon="solar:settings-minimalistic-linear" width="16"></iconify-icon>
-        </div>
-        <h3 class="text-sm font-semibold text-slate-900 tracking-tight">Fabrication Parameters</h3>
-      </div>
-      <span class="text-[10px] font-mono font-medium text-slate-400 bg-slate-50 px-2 py-1 rounded border border-[#E1E4E8]">ID: REF-00-1928</span>
-    </div>
-
-    <!-- Options Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      
-      <!-- Substrate -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Substrate</label>
-        <div class="relative group">
-          <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-md py-2 pl-3 pr-8 text-xs font-medium text-slate-700 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm cursor-pointer hover:border-slate-300">
-            <option>FR-4 Standard (TG150)</option>
-            <option>FR-4 High TG (TG170)</option>
-            <option>Aluminum Core</option>
-            <option>Rogers 4350B</option>
-          </select>
-          <div class="absolute right-2.5 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-            <iconify-icon icon="solar:alt-arrow-down-linear" width="12"></iconify-icon>
-          </div>
-        </div>
+    <main class="pt-24 pb-20 max-w-4xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-semibold text-slate-900 mb-2">Configure Your PCB Order</h1>
+        <p class="text-sm text-slate-500">Specify your requirements and upload Gerber files</p>
       </div>
 
-      <!-- Layers -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Layers</label>
-        <div class="grid grid-cols-4 gap-1 p-1 bg-slate-100/80 rounded-md border border-[#E1E4E8]">
-          <button class="py-1.5 text-[10px] font-semibold bg-white rounded shadow-sm text-slate-900 border border-slate-200 transition-all">2</button>
-          <button class="py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 hover:bg-white/60 rounded transition-all">4</button>
-          <button class="py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 hover:bg-white/60 rounded transition-all">6</button>
-          <button class="py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 hover:bg-white/60 rounded transition-all">8</button>
-        </div>
-      </div>
-
-      <!-- Thickness -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Thickness</label>
-        <div class="relative group">
-          <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-md py-2 pl-3 pr-8 text-xs font-medium text-slate-700 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm cursor-pointer hover:border-slate-300">
-            <option>0.6 mm</option>
-            <option>0.8 mm</option>
-            <option>1.0 mm</option>
-            <option>1.2 mm</option>
-            <option selected="">1.6 mm</option>
-            <option>2.0 mm</option>
-          </select>
-          <div class="absolute right-2.5 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-            <iconify-icon icon="solar:alt-arrow-down-linear" width="12"></iconify-icon>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quantity -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Quantity</label>
-          <span class="text-[10px] font-mono font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">10 pcs</span>
-        </div>
-        <div class="h-[34px] flex items-center px-1">
-           <input type="range" min="5" max="100" step="5" value="10" class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-[#30A612]">
-        </div>
-      </div>
-
-      <!-- Finish -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Surface Finish</label>
-        <div class="relative group">
-          <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded-md py-2 pl-3 pr-8 text-xs font-medium-1 focus:ring-slate-100 transition-all shadow-sm cursor-pointer hover:border-slate-300">
-            <option>HASL (Lead-Free)</option>
-            <option>ENIG (Immersion Gold)</option>
-            <option>OSP</option>
-            <option>Hard Gold</option>
-          </select>
-          <div class="absolute right-2.5 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-            <iconify-icon icon="solar:alt-arrow-down-linear" width="12"></iconify-icon>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mask Color -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Mask Color</label>
-        <div class="flex gap-3 items-center h-[34px]">
-          <div class="w-5 h-5 rounded-full bg-[#15803d] border border-slate-300 ring-2 ring-offset-2 ring-slate-100 shadow-sm cursor-pointer"></div>
-          <div class="w-5 h-5 rounded-full bg-[#1e40af] border border-slate-200 hover:ring-2 hover:ring-offset-2 hover:ring-slate-100 transition-all shadow-sm cursor-pointer opacity-80 hover:opacity-100"></div>
-          <div class="w-5 h-5 rounded-full bg-[#b91c1c] border border-slate-200 hover:ring-2 hover:ring-offset-2 hover:ring-slate-100 transition-all shadow-sm cursor-pointer opacity-80 hover:opacity-100"></div>
-          <div class="w-5 h-5 rounded-full bg-[#111827] border border-slate-200 hover:ring-2 hover:ring-offset-2 hover:ring-slate-100 transition-all shadow-sm cursor-pointer opacity-80 hover:opacity-100"></div>
-          <div class="w-5 h-5 rounded-full bg-white border border-slate-200 hover:ring-2 hover:ring-offset-2 hover:ring-slate-100 transition-all shadow-sm cursor-pointer opacity-80 hover:opacity-100"></div>
-        </div>
-      </div>
-
-      <!-- Silkscreen -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Silkscreen</label>
-        <div class="flex bg-slate-100/80 p-1 rounded-md border border-[#E1E4E8]">
-           <button class="flex-1 py-1.5 text-[10px] font-semibold bg-white rounded shadow-sm text-slate-900 border border-slate-200 transition-all">White</button>
-           <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 hover:bg-white/60 rounded transition-all">Black</button>
-        </div>
-      </div>
-
-      <!-- Copper Weight -->
-      <div class="space-y-2">
-        <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-tight">Copper Weight</label>
-        <div class="flex bg-slate-100/80 p-1 rounded-md border border-[#E1E4E8]">
-          <button class="flex-1 py-1.5 text-[10px] font-semibold bg-white rounded shadow-sm text-slate-900 border border-slate-200 transition-all">1 oz</button>
-          <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 hover:bg-white/60 rounded transition-all">2 oz</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-          <!-- Section B: Fabrication Specs -->
-          <section class="overflow-hidden bg-white border-[#E1E4E8] border rounded-md">
-            <div class="bg-slate-50 border-[#E1E4E8] border-b pt-2 pr-4 pb-2 pl-4">
-              <span class="text-xs font-semibold text-slate-700 uppercase tracking-tight">B. Fabrication Specs</span>
+      <form id="order-form" class="bg-white rounded-xl border border-[#E1E4E8] shadow-xl p-8">
+        <!-- File Upload -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-slate-900 mb-4">Gerber Files (Optional)</label>
+          <div class="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center hover:border-[#30A612] transition-colors cursor-pointer" id="drop-zone">
+            <input type="file" id="gerber-file" name="gerber_file" accept=".zip,.rar" class="hidden">
+            <iconify-icon icon="solar:cloud-upload-linear" width="48" class="text-slate-300 mb-3"></iconify-icon>
+            <p class="text-sm font-medium text-slate-900 mb-1">Drop Gerber archive here</p>
+            <p class="text-xs text-slate-500">or click to browse (.zip or .rar, max 50MB)</p>
+            <div id="file-info" class="hidden mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p class="text-sm font-medium text-green-900" id="file-name"></p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 pt-6 pr-6 pb-6 pl-6 gap-x-6 gap-y-6">
-              
-              <!-- Material Type -->
-              <div class="col-span-1 md:col-span-2">
-                <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">Material Type</label>
-                <div class="grid grid-cols-2 gap-2">
-                  <button class="option-btn selected w-full py-1.5 px-3 rounded text-xs font-mono text-left truncate" title="FR4 TG135">FR4 TG135</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600 truncate" title="FR4 TG155">FR4 TG155</button>
-                  <button class="w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-300 bg-slate-50 border border-slate-100 cursor-not-allowed truncate" disabled="" title="Nan Ya NP-140F (Unavailable)">Nan Ya NP-140F</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600 truncate" title="Nan Ya NP-155F">Nan Ya NP-155F</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600 truncate" title="KB-6165 - TG155">KB-6165 - TG155</button>
-                  <button class="w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-300 bg-slate-50 border border-slate-100 cursor-not-allowed truncate" disabled="" title="S1000H TG155 (Unavailable)">S1000H TG155</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600 col-span-2 truncate" title="Shengyi S1000-2M - TG170">Shengyi S1000-2M - TG170</button>
-                </div>
-              </div>
-
-              <!-- Thickness -->
-              <div class="">
-                <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">PCB Thickness</label>
-                <div class="flex flex-col gap-1.5">
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600">0.8 mm</button>
-                  <button class="option-btn selected w-full py-1.5 px-3 rounded text-xs font-mono text-left">1.6 mm</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs font-mono text-left text-slate-600">2.0 mm</button>
-                </div>
-              </div>
-
-              <!-- Solder Mask -->
-              <div class="">
-                <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">Solder Mask</label>
-                <div class="flex flex-wrap gap-2">
-                  <div class="color-swatch bg-[#15803d] selected" title="Green"></div>
-                  <div class="color-swatch bg-[#7e22ce]" title="Purple"></div>
-                  <div class="color-swatch bg-[#b91c1c]" title="Red"></div>
-                  <div class="color-swatch bg-[#1e40af]" title="Blue"></div>
-                  <div class="color-swatch bg-slate-900" title="Black"></div>
-                  <div class="color-swatch bg-white" title="White"></div>
-                </div>
-              </div>
-
-              <!-- Surface Finish -->
-              <div class="">
-                <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">Surface Finish</label>
-                <div class="flex flex-col gap-1.5">
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs text-left text-slate-600">HASL (with lead)</button>
-                  <button class="option-btn w-full py-1.5 px-3 rounded text-xs text-left text-slate-600">HASL Lead-Free</button>
-                  <button class="option-btn selected w-full py-1.5 px-3 rounded text-xs text-left">ENIG (Gold)</button>
-                </div>
-              </div>
-
-              <!-- Silkscreen -->
-              <div class="">
-                <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">Silkscreen</label>
-                <div class="flex gap-2">
-                  <button class="option-btn selected flex-1 py-1.5 rounded text-xs font-medium">White</button>
-                  <button class="option-btn flex-1 py-1.5 rounded text-xs font-medium text-slate-600">Black</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Section C & D (Two Columns) -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- Section C: High-Spec Options -->
-  <section class="flex flex-col bg-white border border-[#E1E4E8] rounded-lg overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-    <div class="bg-slate-50/60 border-b border-[#E1E4E8] px-4 py-3 flex items-center justify-between">
-      <span class="text-xs font-semibold text-slate-700 uppercase tracking-tight font-inter">C. High-Spec Options</span>
-    </div>
-    
-    <div class="p-5 space-y-6">
-      
-      <!-- Outer Copper Weight -->
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center justify-between">
-          <label class="text-xs font-medium text-slate-600">Outer Copper Weight</label>
-          <span class="text-[10px] text-slate-400">Heavier weights require special review</span>
+          </div>
         </div>
-        <div class="flex bg-[#F8F9FA] p-0.5 rounded border border-[#E1E4E8] w-full">
-          <button class="flex-1 py-1.5 text-[10px] font-semibold rounded-sm bg-white shadow-sm text-slate-900 border border-slate-200 transition-all">1 oz</button>
-          <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-500 hover:text-slate-900 transition-colors">2 oz</button>
-          <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-300 cursor-not-allowed" title="Unavailable">2.5 oz</button>
-          <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-300 cursor-not-allowed" title="Unavailable">3.5 oz</button>
-          <button class="flex-1 py-1.5 text-[10px] font-medium text-slate-300 cursor-not-allowed" title="Unavailable">4.5 oz</button>
-        </div>
-      </div>
 
-      <!-- Technical Specs Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        
-        <!-- Min Hole Size -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Min Via Hole Size</label>
-          <div class="relative group">
-            <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded px-3 py-2 text-xs text-slate-700 font-mono focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm">
-              <option>0.3mm / 0.45mm</option>
-              <option>0.25mm / 0.40mm</option>
-              <option disabled="" class="text-slate-300 bg-slate-50">0.2mm (Adv. Only)</option>
-              <option disabled="" class="text-slate-300 bg-slate-50">0.15mm (HDI Only)</option>
+        <!-- Specifications Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Substrate</label>
+            <select name="substrate" data-testid="substrate-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>FR-4 Standard (TG150)</option>
+              <option>FR-4 High TG (TG170)</option>
+              <option>Aluminum Core</option>
+              <option>Rogers 4350B</option>
             </select>
-            <div class="absolute right-2 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
-            </div>
           </div>
-        </div>
 
-        <!-- Via Covering -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Via Covering</label>
-          <div class="relative group">
-            <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded px-3 py-2 text-xs text-slate-700 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm">
-              <option selected="">Tented</option>
-              <option>Untented</option>
-              <option>Plugged</option>
-              <option disabled="" class="text-slate-300 bg-slate-50">Epoxy Filled &amp; Capped</option>
-              <option disabled="" class="text-slate-300 bg-slate-50">Copper Paste Filled</option>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Layers</label>
+            <select name="layers" data-testid="layers-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option value="2">2 Layers</option>
+              <option value="4">4 Layers</option>
+              <option value="6">6 Layers</option>
+              <option value="8">8 Layers</option>
             </select>
-            <div class="absolute right-2 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
-            </div>
           </div>
-        </div>
 
-        <!-- Via Plating Method -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Via Plating Method</label>
-          <div class="relative group">
-            <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded px-3 py-2 text-xs text-slate-700 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm">
-              <option selected="">Horizontal Electroless</option>
-              <option>Not Specified</option>
-              <option disabled="" class="text-slate-300 bg-slate-50">Conductive Adhesive</option>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Thickness</label>
+            <select name="thickness" data-testid="thickness-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>0.6 mm</option>
+              <option>0.8 mm</option>
+              <option>1.0 mm</option>
+              <option>1.2 mm</option>
+              <option selected>1.6 mm</option>
+              <option>2.0 mm</option>
             </select>
-            <div class="absolute right-2 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
-            </div>
           </div>
-        </div>
 
-        <!-- Outline Tolerance -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Outline Tolerance</label>
-          <div class="flex items-center justify-center bg-[#F8F9FA] px-3 py-2 rounded border border-[#E1E4E8] w-full h-[34px]">
-             <span class="text-[11px] font-semibold text-slate-700 font-mono">±0.2mm (Regular)</span>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Quantity</label>
+            <input type="number" name="quantity" data-testid="quantity-input" value="10" min="5" max="100" step="5" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
           </div>
-        </div>
 
-        <!-- Mark on PCB -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Mark on PCB</label>
-          <div class="relative group">
-            <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded px-3 py-2 text-xs text-slate-700 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-100 transition-all shadow-sm">
-              <option selected="">Remove Mark</option>
-              <option>Add Order Number</option>
-              <option>Add 2D Barcode</option>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Surface Finish</label>
+            <select name="finish" data-testid="finish-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>HASL (Lead-Free)</option>
+              <option>ENIG (Immersion Gold)</option>
+              <option>OSP</option>
+              <option>Hard Gold</option>
             </select>
-            <div class="absolute right-2 top-2.5 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
-            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Solder Mask</label>
+            <select name="mask_color" data-testid="mask-color-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>Green</option>
+              <option>Blue</option>
+              <option>Red</option>
+              <option>Black</option>
+              <option>White</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Silkscreen</label>
+            <select name="silkscreen" data-testid="silkscreen-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>White</option>
+              <option>Black</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Copper Weight</label>
+            <select name="copper_weight" data-testid="copper-weight-select" class="w-full px-3 py-2.5 bg-white border border-[#E1E4E8] rounded-lg text-sm focus:outline-none focus:border-[#30A612] focus:ring-1 focus:ring-[#30A612]">
+              <option>1oz</option>
+              <option>2oz</option>
+            </select>
           </div>
         </div>
 
-        <!-- Electrical Test -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-600">Electrical Test</label>
-          <div class="w-full bg-[#F8F9FA] border border-[#E1E4E8] rounded px-3 py-2 text-xs text-slate-400 flex items-center justify-between cursor-not-allowed">
-            <span>Flying Probe Test</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          </div>
-        </div>
-      </div>
+        <div id="error-msg" class="hidden mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600"></div>
+        <div id="success-msg" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-sm text-green-600"></div>
 
-      <!-- Confirm Production File -->
-      <div class="flex items-center justify-between py-2 border-t border-b border-dashed border-[#E1E4E8]">
-        <div class="flex flex-col">
-          <span class="text-xs font-medium text-slate-700">Confirm Production File</span>
-          <span class="text-[10px] text-slate-400">Review engineering data before production</span>
-        </div>
-        <div class="flex bg-[#F8F9FA] p-0.5 rounded border border-[#E1E4E8]">
-          <button class="px-3 py-1 text-[10px] font-semibold rounded-sm bg-white shadow-sm text-slate-900 border border-slate-200">No</button>
-          <button class="px-3 py-1 text-[10px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Yes</button>
-        </div>
-      </div>
-
-      <!-- Special Features Toggles -->
-      <div class="space-y-4">
-        <div class="grid grid-cols-2 gap-x-8 gap-y-4">
-          <!-- Gold Fingers -->
-          <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">Gold Fingers</span>
-            <div class="relative inline-block w-8 h-4 align-middle select-none">
-              <input type="checkbox" name="toggle" id="toggle-gold" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-slate-300 appearance-none cursor-pointer transition-all duration-300 ease-in-out">
-              <label for="toggle-gold" class="toggle-label block overflow-hidden h-4 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300"></label>
-            </div>
-          </div>
-
-          <!-- Castellated Holes -->
-          <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">Castellated Holes</span>
-            <div class="relative inline-block w-8 h-4 align-middle select-none">
-              <input type="checkbox" name="toggle" id="toggle-cast" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-slate-300 appearance-none cursor-pointer transition-all duration-300 ease-in-out">
-              <label for="toggle-cast" class="toggle-label block overflow-hidden h-4 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300"></label>
-            </div>
-          </div>
-
-          <!-- Edge Plating -->
-          <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">Edge Plating</span>
-            <div class="relative inline-block w-8 h-4 align-middle select-none">
-              <input type="checkbox" name="toggle" id="toggle-edge" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-slate-300 appearance-none cursor-pointer transition-all duration-300 ease-in-out">
-              <label for="toggle-edge" class="toggle-label block overflow-hidden h-4 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300"></label>
-            </div>
-          </div>
-
-          <!-- Blind Slots -->
-          <div class="flex items-center justify-between group cursor-pointer">
-            <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">Blind Slots</span>
-            <div class="relative inline-block w-8 h-4 align-middle select-none">
-              <input type="checkbox" name="toggle" id="toggle-blind" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-slate-300 appearance-none cursor-pointer transition-all duration-300 ease-in-out">
-              <label for="toggle-blind" class="toggle-label block overflow-hidden h-4 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300"></label>
-            </div>
-          </div>
-        </div>
-
-        <!-- UL Marking -->
-        <div class="pt-2 border-t border-dashed border-[#E1E4E8]">
-           <div class="flex items-center justify-between mt-2">
-              <span class="text-xs text-slate-600">UL Marking</span>
-              <div class="relative w-40 group">
-                <select class="w-full appearance-none bg-white border border-[#E1E4E8] rounded px-2 py-1.5 text-[10px] text-slate-700 focus:outline-none focus:border-slate-400 shadow-sm">
-                  <option selected="">No</option>
-                  <option>Yes (Any Position)</option>
-                  <option>Yes (Specify Position)</option>
-                </select>
-                 <div class="absolute right-2 top-2 pointer-events-none text-slate-400 group-hover:text-slate-600 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
-                </div>
-              </div>
-           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section D: PCB Assembly -->
-  <section class="flex flex-col bg-white border border-[#E1E4E8] rounded-lg overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.02)] h-full">
-    <div class="bg-slate-50/60 border-b border-[#E1E4E8] px-4 py-3">
-      <span class="text-xs font-semibold text-slate-700 uppercase tracking-tight font-inter">D. Assembly Service</span>
-    </div>
-    
-    <div class="p-6 flex-1 flex flex-col items-center justify-center text-center space-y-5">
-      <div class="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu opacity-60"><rect width="16" height="16" x="4" y="4" rx="2"></rect><rect width="6" height="6" x="9" y="9" rx="1"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
-      </div>
-      
-      <div class="max-w-[280px]">
-        <h3 class="text-sm font-semibold text-slate-900 mb-1">Add PCB Assembly (PCBA)</h3>
-        <p class="text-xs text-slate-500 leading-relaxed">Turnkey assembly service. Includes parts sourcing and SMT assembly. Requires BOM file.</p>
-      </div>
-      
-      <div class="pt-2">
-         <button class="group flex items-center gap-2.5 border border-[#E1E4E8] bg-white pl-2 pr-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:border-slate-300 hover:shadow-sm transition-all active:scale-95" onclick="this.classList.toggle('bg-green-50'); this.classList.toggle('border-green-200'); this.querySelector('.circle').classList.toggle('bg-green-500'); this.querySelector('.circle').classList.toggle('border-green-600');">
-           <span class="circle w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center bg-white transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check text-white opacity-0 transition-opacity group-hover:opacity-100"><path d="M20 6 9 17l-5-5"></path></svg>
-           </span>
-           Enable Assembly
-         </button>
-      </div>
-    </div>
-  </section>
-</div>
-
-          <!-- Bottom Spacer -->
-          <div class="h-20"></div>
-
-        </div>
-      </div>
-
-      <!-- Sticky Action Footer -->
-      <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-[#E1E4E8] p-4 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          <!-- Status Message -->
-          <div class="flex items-start gap-3 bg-[#F8F9FA] border border-[#E1E4E8] rounded px-4 py-2.5 flex-1 w-full md:w-auto">
-             <iconify-icon icon="solar:info-circle-linear" class="text-slate-400 mt-0.5 flex-shrink-0"></iconify-icon>
-             <div class="flex flex-col">
-               <span class="text-xs font-semibold text-slate-700">Manual Review Required</span>
-               <span class="text-[10px] text-slate-500 leading-tight">Complex specs detected. Our engineers will review files and provide a verified quote within 24 hours.</span>
-             </div>
-          </div>
-
-          <!-- Primary Action -->
-          <button class="btn-primary text-white text-sm font-medium px-8 py-3 rounded shadow-md hover:shadow-lg hover:opacity-95 transition-all w-full md:w-auto flex items-center justify-center gap-2">
-            Submit for Price Review
-            <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+        <div class="flex justify-end gap-4">
+          <a href="/dashboard" class="px-6 py-2.5 border border-[#E1E4E8] rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            Cancel
+          </a>
+          <button type="submit" data-testid="submit-order-btn" class="btn-primary text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+            Submit for Review
           </button>
         </div>
-      </div>
-
+      </form>
     </main>
-  
-</body></html>
+
+    <script>
+      const API_BASE = 'https://pcb-pool.preview.emergentagent.com';
+      
+      // Get token from localStorage (set during login)
+      function getToken() {
+        return localStorage.getItem('access_token');
+      }
+
+      let selectedFile = null;
+
+      // File upload handling
+      const dropZone = document.getElementById('drop-zone');
+      const fileInput = document.getElementById('gerber-file');
+      const fileInfo = document.getElementById('file-info');
+      const fileName = document.getElementById('file-name');
+
+      dropZone.addEventListener('click', () => fileInput.click());
+
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-[#30A612]', 'bg-green-50');
+      });
+
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('border-[#30A612]', 'bg-green-50');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-[#30A612]', 'bg-green-50');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          handleFile(files[0]);
+        }
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
+
+      function handleFile(file) {
+        if (file.size > 50 * 1024 * 1024) {
+          alert('File size exceeds 50MB limit');
+          return;
+        }
+        selectedFile = file;
+        fileName.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+        fileInfo.classList.remove('hidden');
+      }
+
+      // Form submission
+      document.getElementById('order-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const errorMsg = document.getElementById('error-msg');
+        const successMsg = document.getElementById('success-msg');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        
+        errorMsg.classList.add('hidden');
+        successMsg.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+          const formData = new FormData();
+          
+          // Collect specs
+          const specs = {
+            substrate: e.target.substrate.value,
+            layers: parseInt(e.target.layers.value),
+            thickness: e.target.thickness.value,
+            quantity: parseInt(e.target.quantity.value),
+            finish: e.target.finish.value,
+            mask_color: e.target.mask_color.value,
+            silkscreen: e.target.silkscreen.value,
+            copper_weight: e.target.copper_weight.value
+          };
+
+          formData.append('specs', JSON.stringify(specs));
+          
+          if (fileInput.files.length > 0) {
+            formData.append('gerber_file', fileInput.files[0]);
+          }
+
+          const token = getToken();
+          const response = await fetch(`${API_BASE}/api/orders`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            successMsg.textContent = `Order ${data.order_id} created successfully! Redirecting to dashboard...`;
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+              window.location.href = '/dashboard';
+            }, 2000);
+          } else {
+            errorMsg.textContent = data.detail || 'Failed to create order';
+            errorMsg.classList.remove('hidden');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit for Review';
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          errorMsg.textContent = 'Network error. Please try again.';
+          errorMsg.classList.remove('hidden');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit for Review';
+        }
+      });
+    </script>
+</body>
+</html>
