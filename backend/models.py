@@ -58,3 +58,14 @@ class Order(BaseModel):
 class OrderUpdate(BaseModel):
     status: Optional[OrderStatus] = None
     price: Optional[float] = None
+
+# Batch Models (for panelization/pooling)
+class Batch(BaseModel):
+    batch_id: str
+    status: str  # "active", "processing", "completed"
+    created_at: datetime
+    orders_included: List[str]  # List of order_ids
+    total_orders: int = 0
+
+class BatchCreate(BaseModel):
+    order_ids: List[str]
